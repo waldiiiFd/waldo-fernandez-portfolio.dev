@@ -1,0 +1,47 @@
+/* ── Tailwind CSS Import ────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ── Color Tokens ────────────────────────────────────────────── */
+@theme {
+  /* ── Base Color Tokens ── */
+  --color-navy-deep: #0D1433;
+  --color-navy-royal: #171F55;
+  --color-navy-mid: #274272;
+  --color-navy-light: #6C90C3;
+
+  /* ── Semantic Tokens ── */
+  --color-primary: #274272;
+  --color-primary-hover: #171F55;
+  --color-secondary: #6C90C3;
+  --color-accent: #6C90C3;
+  --color-accent-hover: #274272;
+  --color-background: #F5F7FA;
+  --color-foreground: #0D1433;
+  --color-muted: #171F55;
+  --color-border: #6C90C3;
+
+  /* ── Border Radius ── */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+}
+
+/* ── Base Styles ───────────────────────────────────────────── */
+@layer base {
+  /* Bordes: aplica color de borde consistente a todos los elementos */
+  * {
+    border-color: var(--color-border);
+  }
+
+  /* Scroll: comportamiento suave y padding para header fijo */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  /* Body: fondo y color de texto principal */
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
