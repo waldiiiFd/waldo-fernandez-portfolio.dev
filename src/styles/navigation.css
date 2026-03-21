@@ -1,0 +1,52 @@
+/* ── Navigation Links ────────────────────────────────────────── */
+.nav-link,
+.mobile-nav-link {
+  color: var(--color-muted);
+}
+
+.nav-link:hover,
+.nav-link.active,
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  color: var(--color-foreground);
+  background-color: var(--color-accent);
+}
+
+/* ── Header Base State ─────────────────────────────────────── */
+[data-header] {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px rgba(13, 20, 51, 0.1);
+}
+
+/* ── Header Scroll State ────────────────────────────────────── */
+[data-header][data-scrolled="true"] {
+  border-bottom: 2px solid var(--color-primary);
+  box-shadow: 0 2px 10px rgba(13, 20, 51, 0.15);
+}
+
+/* ── Header Height Transition ──────────────────────────────── */
+[data-header][data-scrolled="true"] > nav > div {
+  height: 3.5rem;
+}
+
+[data-header][data-scrolled="true"] img {
+  height: 1.75rem;
+}
+
+[data-header][data-scrolled="false"] > nav > div {
+  height: 4rem;
+}
+
+[data-header][data-scrolled="false"] img {
+  height: 2rem;
+}
+
+/* ── Mobile Menu Toggle ────────────────────────────────────── */
+#mobile-menu-toggle {
+  color: var(--color-muted);
+}
+
+#mobile-menu-toggle:hover {
+  background-color: var(--color-accent);
+}
