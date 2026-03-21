@@ -65,6 +65,11 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 ```
 
+**IMPORTANT**: Styles and scripts MUST be in separate files:
+- Styles → `src/styles/{component-name}.css`
+- Scripts → `src/scripts/{component-name}.ts`
+- Components → only markup + imports
+
 ## Layout Structure
 
 ```
@@ -126,24 +131,27 @@ import Layout from '../layouts/Layout.astro';
 // Components
 import Header from '../components/Header.astro';
 import Navigation from '../components/Navigation.astro';
+import Loader from '../components/Loader.astro';
 
-// Styles
+// Styles (in component frontmatter)
 import '../styles/global.css';
 import '../styles/navigation.css';
+import '../styles/loader.css';
 
-// Scripts
+// Scripts (in template, after component markup)
 <script src="../scripts/navigation.ts"></script>
+<script src="../scripts/loader.ts"></script>
 ```
 
 ## File Organization
 
 ```
 src/
-├── components/      # Reusable Astro components
+├── components/      # Reusable Astro components (only markup)
 ├── layouts/         # Page layouts (Layout.astro)
 ├── pages/           # Routes (index.astro, etc.)
-├── scripts/         # Client-side TypeScript
-├── styles/          # CSS files (global.css, navigation.css)
+├── scripts/         # Client-side TypeScript (loader.ts, navigation.ts)
+├── styles/         # CSS files (global.css, navigation.css, loader.css)
 └── utils/          # TypeScript utilities (if needed)
 public/
 ├── letra-w.png      # Site favicon
