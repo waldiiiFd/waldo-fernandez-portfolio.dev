@@ -1,0 +1,140 @@
+/* ── Footer base — color y gradiente ────────────────────────── */
+.wp-footer {
+  background: linear-gradient(
+    to bottom,
+    var(--color-navy-royal),
+    var(--color-navy-deep)
+  );
+  color: var(--color-text-on-dark);
+}
+
+/* ── Separador superior decorativo ──────────────────────────── */
+.wp-footer__divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-navy-light),
+    transparent
+  );
+}
+
+/* ── Branding ────────────────────────────────────────────────── */
+.wp-footer__name {
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.wp-footer__tagline {
+  color: var(--color-secondary);
+}
+
+/* ── Headings de sección ─────────────────────────────────────── */
+.wp-footer__heading {
+  color: var(--color-secondary);
+  margin-bottom: 0.25rem;
+}
+
+/* ── Contacto — grid con icono + label + valor ───────────────── */
+.wp-footer__contact-item {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.625rem;
+  align-items: start;
+}
+
+.wp-footer__contact-icon {
+  grid-row: span 2;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 0.125rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.wp-footer__contact-label {
+  color: var(--color-secondary);
+  line-height: 1;
+}
+
+.wp-footer__contact-value {
+  color: var(--color-text-on-dark);
+  line-height: 1.4;
+}
+
+.wp-footer__contact-link {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wp-footer__contact-link:hover {
+  color: var(--color-accent);
+}
+
+/* ── Redes sociales — borde y hover ─────────────────────────── */
+.wp-footer__social-link {
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+  border: 1px solid var(--color-navy-light-20);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.wp-footer__social-link:hover {
+  color: #ffffff;
+  border-color: var(--color-accent);
+  background-color: var(--color-navy-light-10);
+}
+
+/* ── Bottom bar — borde y color ──────────────────────────────── */
+.wp-footer__bottom {
+  border-top: 1px solid var(--color-navy-light-15);
+}
+
+.wp-footer__copyright {
+  color: var(--color-text-on-dark-muted);
+}
+
+/* ── Botón volver arriba — visual y estados ──────────────────── */
+.wp-back-to-top {
+  background-color: var(--color-navy-mid);
+  border: 1px solid var(--color-navy-light-40);
+  box-shadow: 0 4px 16px var(--color-navy-deep-50);
+  cursor: pointer;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  /* Oculto por defecto */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.5rem);
+}
+
+.wp-back-to-top[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.wp-back-to-top:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-accent);
+}
+
+.wp-back-to-top:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-back-to-top {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+}
