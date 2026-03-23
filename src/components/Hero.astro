@@ -1,0 +1,40 @@
+---
+// src/components/Hero.astro
+import "../styles/hero.css";
+import { Image } from "astro:assets";
+import mobileImageSrc from "../../public/images/developer-desk-at-night-mobile.webp";
+import desktopImageSrc from "../../public/images/developer-desk-at-night.webp";
+---
+
+<section id="inicio" class="wp-hero" aria-label="Sección de inicio">
+  <picture class="wp-hero__bg" aria-hidden="true" role="presentation">
+    <source
+      media="(max-width: 767px)"
+      srcset={mobileImageSrc.src}
+      type="image/webp"
+      width="768"
+      height="1024"
+    />
+    <Image
+      src={desktopImageSrc}
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+      fetchpriority="high"
+      width={1920}
+      height={1080}
+    />
+  </picture>
+  <div class="wp-hero__overlay" aria-hidden="true"></div>
+  <div class="wp-hero__content">
+    <!-- <p>
+      Hola, soy Waldo Fernandez: Ingeniero de Software apasionado por crear experiencias digitales
+      excepcionales. Con una sólida formación en ingeniería informática y
+      experiencia en proyectos de diversa índole, me especializo en el
+      desarrollo de aplicaciones web modernas y eficientes. Mi enfoque se centra
+      en la calidad del código, la usabilidad y la innovación, siempre buscando
+      superar las expectativas de los usuarios y contribuir al éxito de cada
+      proyecto.
+    </p> -->
+  </div>
+</section>

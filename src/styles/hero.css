@@ -1,0 +1,66 @@
+/* ── Hero Section ────────────────────────────────────────────── */
+.wp-hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Background Picture ──────────────────────────────────────── */
+.wp-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.wp-hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  animation: wp-ken-burns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ── Overlay (dos capas combinadas) ──────────────────────────── */
+.wp-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--color-navy-deep-75) 0%,
+      var(--color-navy-deep-55) 100%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      var(--color-navy-mid-30) 0%,
+      transparent 70%
+    );
+  z-index: 1;
+}
+
+/* ── Content Layer ───────────────────────────────────────────── */
+.wp-hero__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+/* ── Ken Burns Animation ─────────────────────────────────────── */
+@keyframes wp-ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .wp-hero__bg img {
+    animation: none;
+    will-change: auto;
+  }
+}
