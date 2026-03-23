@@ -1,5 +1,5 @@
 ---
-import '../styles/navigation.css';
+import "../styles/navigation.css";
 
 const navItems = [
   { title: "Inicio", label: "inicio", url: "#inicio" },
@@ -15,7 +15,9 @@ const navItems = [
   data-header
   data-scrolled="false"
 >
-  <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300">
+  <nav
+    class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300"
+  >
     <div class="flex items-center justify-between transition-all duration-300">
       <!-- Logo -->
       <a
@@ -24,10 +26,11 @@ const navItems = [
         aria-label="Portafolio de Waldo Fernandez - Ir al inicio"
       >
         <img
-          src="/letra-w.png"
+          src="/images/letra-w-80.png"
           alt="Logo Waldo Fernandez"
-          width={48}
-          height={48}
+          data-logo
+          width={80}
+          height={80}
           class="w-auto transition-all duration-300"
           loading="eager"
           fetchpriority="high"
@@ -76,8 +79,7 @@ const navItems = [
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
         </svg>
         <svg
           class="hidden h-6 w-6 close-icon"
@@ -90,8 +92,7 @@ const navItems = [
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>

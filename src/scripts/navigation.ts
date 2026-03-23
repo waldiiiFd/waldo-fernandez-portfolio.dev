@@ -1,9 +1,12 @@
 const header = document.querySelector('[data-header]') as HTMLElement | null;
+const logoImg = document.querySelector('[data-logo]') as HTMLImageElement | null;
 const mobileMenuToggle = document.getElementById('mobile-menu-toggle') as HTMLButtonElement | null;
 const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
 const menuIcon = mobileMenuToggle?.querySelector('.menu-icon') as HTMLElement | null;
 const closeIcon = mobileMenuToggle?.querySelector('.close-icon') as HTMLElement | null;
 const navLinks = document.querySelectorAll('[data-section]') as NodeListOf<HTMLAnchorElement>;
+
+const SCROLL_THRESHOLD = 30;
 
 let isMenuOpen = false;
 
@@ -33,8 +36,22 @@ function closeMobileMenu(): void {
 
 function handleScroll(): void {
   const scrollY = window.scrollY;
-  header?.setAttribute('data-scrolled', String(scrollY > 30));
+  const isScrolled = scrollY > SCROLL_THRESHOLD;
 
+  header?.setAttribute('data-scrolled', String(isScrolled));
+
+  // Logo swap — versión optimizada según estado
+  if (isScrolled) {
+    logoImg?.setAttribute('src', '/images/letra-w-40.png');
+    logoImg?.setAttribute('width', '20');
+    logoImg?.setAttribute('height', '20');
+  } else {
+    logoImg?.setAttribute('src', '/images/letra-w-80.png');
+    logoImg?.setAttribute('width', '0');
+    logoImg?.setAttribute('height', '0');
+  }
+
+  // Active link tracking
   const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
   let currentSection = '';
 
