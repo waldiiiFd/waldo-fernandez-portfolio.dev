@@ -20,6 +20,21 @@
   --color-muted: #171F55;
   --color-border: #6C90C3;
 
+  /* ── Opacity Variants (reused across components) ── */
+  --color-text-on-dark: rgba(255, 255, 255, 0.85);
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.45);
+  --color-navy-light-10: rgba(108, 144, 195, 0.1);
+  --color-navy-light-15: rgba(108, 144, 195, 0.15);
+  --color-navy-light-20: rgba(108, 144, 195, 0.2);
+  --color-navy-light-30: rgba(108, 144, 195, 0.3);
+  --color-navy-light-40: rgba(108, 144, 195, 0.4);
+  --color-navy-deep-40: rgba(13, 20, 51, 0.4);
+  --color-navy-deep-50: rgba(13, 20, 51, 0.5);
+  --color-navy-deep-55: rgba(13, 20, 51, 0.55);
+  --color-navy-deep-75: rgba(13, 20, 51, 0.75);
+  --color-navy-deep-92: rgba(13, 20, 51, 0.92);
+  --color-navy-mid-30: rgba(39, 66, 114, 0.3);
+
   /* ── Border Radius ── */
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
