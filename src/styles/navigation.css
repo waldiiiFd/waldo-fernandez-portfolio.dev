@@ -1,52 +1,98 @@
-/* ── Navigation Links ────────────────────────────────────────── */
-.nav-link,
-.mobile-nav-link {
-  color: var(--color-muted);
-}
-
-.nav-link:hover,
-.nav-link.active,
-.mobile-nav-link:hover,
-.mobile-nav-link.active {
-  color: var(--color-foreground);
-  background-color: var(--color-accent);
-}
-
-/* ── Header Base State ─────────────────────────────────────── */
+/* ── Transición global del header ──────────────────────────── */
 [data-header] {
-  background-color: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: 0 1px 3px rgba(13, 20, 51, 0.1);
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
-/* ── Header Scroll State ────────────────────────────────────── */
-[data-header][data-scrolled="true"] {
-  border-bottom: 2px solid var(--color-primary);
-  box-shadow: 0 2px 10px rgba(13, 20, 51, 0.15);
+[data-header] > nav > div,
+[data-header] img {
+  transition: all 0.3s ease;
 }
 
-/* ── Header Height Transition ──────────────────────────────── */
-[data-header][data-scrolled="true"] > nav > div {
-  height: 3.5rem;
-}
-
-[data-header][data-scrolled="true"] img {
-  height: 1.75rem;
+/* ── Estado inicial — transparente sobre el Hero ────────────── */
+[data-header][data-scrolled="false"] {
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 [data-header][data-scrolled="false"] > nav > div {
-  height: 4rem;
-}
+   height: 5rem;
+ }
 
 [data-header][data-scrolled="false"] img {
-  height: 2rem;
-}
+   width: 48px;
+   height: 48px;
+   filter: brightness(0) invert(1);
+ }
 
-/* ── Mobile Menu Toggle ────────────────────────────────────── */
-#mobile-menu-toggle {
-  color: var(--color-muted);
-}
+[data-header][data-scrolled="false"] .nav-link,
+[data-header][data-scrolled="false"] span {
+   color: var(--color-text-on-dark);
+ }
 
-#mobile-menu-toggle:hover {
-  background-color: var(--color-accent);
-}
+[data-header][data-scrolled="false"] .nav-link:hover,
+[data-header][data-scrolled="false"] .nav-link.active {
+   color: #ffffff;
+   background-color: var(--color-navy-light-20);
+ }
+
+[data-header][data-scrolled="false"] #mobile-menu-toggle {
+   color: var(--color-text-on-dark);
+ }
+
+/* ── Estado compacto — al hacer scroll ──────────────────────── */
+[data-header][data-scrolled="true"] {
+   background-color: rgba(13, 20, 51, 0.92);
+   backdrop-filter: blur(12px) saturate(180%);
+   -webkit-backdrop-filter: blur(12px) saturate(180%);
+   border-bottom: 1px solid var(--color-navy-light-30);
+   box-shadow: 0 4px 20px var(--color-navy-deep-40);
+ }
+
+[data-header][data-scrolled="false"] .nav-link:hover,
+[data-header][data-scrolled="false"] .nav-link.active {
+   color: #ffffff;
+   background-color: var(--color-navy-light-20);
+ }
+
+[data-header][data-scrolled="false"] #mobile-menu-toggle {
+   color: var(--color-text-on-dark);
+ }
+
+/* ── Estado compacto — al hacer scroll ──────────────────────── */
+[data-header][data-scrolled="true"] {
+   background-color: var(--color-navy-deep);
+   backdrop-filter: blur(12px) saturate(180%);
+   -webkit-backdrop-filter: blur(12px) saturate(180%);
+   border-bottom: 1px solid var(--color-navy-light);
+   box-shadow: 0 4px 20px var(--color-navy-deep);
+ }
+
+[data-header][data-scrolled="true"] > nav > div {
+   height: 3.5rem;
+ }
+
+[data-header][data-scrolled="true"] .nav-link {
+   color: var(--color-secondary);
+ }
+
+[data-header][data-scrolled="true"] .nav-link:hover,
+[data-header][data-scrolled="true"] .nav-link.active {
+   color: var(--color-foreground);
+   background-color: var(--color-accent);
+ }
+
+/* ── Mobile menu — estilos para ambos estados ───────────────── */
+.mobile-nav-link {
+   color: var(--color-text-on-dark);
+ }
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+   color: #ffffff;
+   background-color: var(--color-navy-light-20);
+ }
