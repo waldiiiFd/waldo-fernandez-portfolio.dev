@@ -1,5 +1,5 @@
 ---
-name: "Waldo Fernandez"
+name: "Waldo Fernández"
 role: "Ingeniero de Software"
 description: " Mi enfoque se centra en el desarrollo de aplicaciones web modernas y eficientes, entregando soluciones robustas e intuitivas que impulsan el éxito de cada proyecto"
 ctas:
