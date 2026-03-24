@@ -22,6 +22,8 @@ function toggleMobileMenu(): void {
   );
   menuIcon?.classList.toggle('hidden', isMenuOpen);
   closeIcon?.classList.toggle('hidden', !isMenuOpen);
+
+  header?.classList.toggle('menu-open', isMenuOpen);
 }
 
 function closeMobileMenu(): void {
@@ -32,6 +34,8 @@ function closeMobileMenu(): void {
   mobileMenuToggle?.setAttribute('aria-label', 'Abrir menú de navegación');
   menuIcon?.classList.remove('hidden');
   closeIcon?.classList.add('hidden');
+
+  header?.classList.remove('menu-open');
 }
 
 function handleScroll(): void {

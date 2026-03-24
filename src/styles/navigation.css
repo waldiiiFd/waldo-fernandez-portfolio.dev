@@ -20,79 +20,82 @@
 }
 
 [data-header][data-scrolled="false"] > nav > div {
-   height: 5rem;
- }
+  height: 5rem;
+}
 
 [data-header][data-scrolled="false"] img {
-   width: 48px;
-   height: 48px;
-   filter: brightness(0) invert(1);
- }
+  width: 48px;
+  height: 48px;
+  filter: brightness(0) invert(1);
+}
 
 [data-header][data-scrolled="false"] .nav-link,
 [data-header][data-scrolled="false"] span {
-   color: var(--color-text-on-dark);
- }
+  color: var(--color-text-on-dark);
+}
 
 [data-header][data-scrolled="false"] .nav-link:hover,
 [data-header][data-scrolled="false"] .nav-link.active {
-   color: #ffffff;
-   background-color: var(--color-navy-light-20);
- }
+  color: #ffffff;
+  background-color: var(--color-navy-light-20);
+}
 
 [data-header][data-scrolled="false"] #mobile-menu-toggle {
-   color: var(--color-text-on-dark);
- }
+  color: var(--color-text-on-dark);
+}
 
 /* ── Estado compacto — al hacer scroll ──────────────────────── */
 [data-header][data-scrolled="true"] {
-   background-color: rgba(13, 20, 51, 0.92);
-   backdrop-filter: blur(12px) saturate(180%);
-   -webkit-backdrop-filter: blur(12px) saturate(180%);
-   border-bottom: 1px solid var(--color-navy-light-30);
-   box-shadow: 0 4px 20px var(--color-navy-deep-40);
- }
-
-[data-header][data-scrolled="false"] .nav-link:hover,
-[data-header][data-scrolled="false"] .nav-link.active {
-   color: #ffffff;
-   background-color: var(--color-navy-light-20);
- }
-
-[data-header][data-scrolled="false"] #mobile-menu-toggle {
-   color: var(--color-text-on-dark);
- }
-
-/* ── Estado compacto — al hacer scroll ──────────────────────── */
-[data-header][data-scrolled="true"] {
-   background-color: var(--color-navy-deep);
-   backdrop-filter: blur(12px) saturate(180%);
-   -webkit-backdrop-filter: blur(12px) saturate(180%);
-   border-bottom: 1px solid var(--color-navy-light);
-   box-shadow: 0 4px 20px var(--color-navy-deep);
- }
+  background-color: var(--color-navy-deep-92);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--color-navy-light-30);
+  box-shadow: 0 4px 20px var(--color-navy-deep-40);
+}
 
 [data-header][data-scrolled="true"] > nav > div {
-   height: 3.5rem;
- }
+  height: 3.5rem;
+}
 
 [data-header][data-scrolled="true"] .nav-link {
-   color: var(--color-secondary);
- }
+  color: var(--color-secondary);
+}
 
 [data-header][data-scrolled="true"] .nav-link:hover,
 [data-header][data-scrolled="true"] .nav-link.active {
-   color: var(--color-foreground);
-   background-color: var(--color-accent);
- }
+  color: var(--color-foreground);
+  background-color: var(--color-accent);
+}
 
-/* ── Mobile menu — estilos para ambos estados ───────────────── */
+[data-header][data-scrolled="true"] #mobile-menu-toggle {
+  color: var(--color-secondary);
+}
+
+/* ── Menú abierto — fondo opaco en todo el header ───────────── */
+[data-header].menu-open {
+  background-color: var(--color-navy-deep) !important;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--color-navy-light-30);
+}
+
+[data-header].menu-open #mobile-menu-toggle {
+  color: var(--color-text-on-dark);
+}
+
+/* ── Mobile menu — sin gaps, fondo heredado del header ──────── */
+#mobile-menu {
+  width: 100%;
+  border-top: 1px solid var(--color-navy-light-30);
+}
+
+/* ── Mobile nav links ────────────────────────────────────────── */
 .mobile-nav-link {
-   color: var(--color-text-on-dark);
- }
+  color: var(--color-text-on-dark);
+}
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
-   color: #ffffff;
-   background-color: var(--color-navy-light-20);
- }
+  color: #ffffff;
+  background-color: var(--color-navy-light-20);
+}

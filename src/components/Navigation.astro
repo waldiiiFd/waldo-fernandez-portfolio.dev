@@ -96,27 +96,26 @@ const navItems = [
         </svg>
       </button>
     </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden pb-4" aria-hidden="true">
-      <ul class="flex flex-col gap-1 pt-2" role="list">
-        {
-          navItems.map((link) => (
-            <li>
-              <a
-                href={link.url}
-                class="block rounded-lg px-4 py-3 text-base font-medium transition-colors mobile-nav-link"
-                data-section={link.label}
-                aria-label={`Ir a la sección ${link.title}`}
-              >
-                {link.title}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
   </nav>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden pb-4" aria-hidden="true">
+    <ul class="flex flex-col gap-1 pt-2" role="list">
+      {
+        navItems.map((link) => (
+          <li>
+            <a
+              href={link.url}
+              class="block rounded-lg px-4 py-3 text-base font-medium transition-colors mobile-nav-link"
+              data-section={link.label}
+              aria-label={`Ir a la sección ${link.title}`}
+            >
+              {link.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </header>
 
 <script src="../scripts/navigation.ts"></script>
