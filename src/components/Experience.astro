@@ -1,0 +1,111 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/experience.css";
+
+const experienceEntries = await getCollection("experience");
+const experienceEntry = experienceEntries[0];
+const { jobs, education } = experienceEntry.data;
+
+// Mapa tecnología → slug de Simple Icons (https://simpleicons.org)
+const techIconMap: Record<string, string> = {
+  PHP: "php",
+  Laravel: "laravel",
+  "REST APIs": "fastapi",
+  PostgreSQL: "postgresql",
+  MariaDB: "mariadb",
+  Git: "git",
+  GitHub: "github",
+  "Postman API": "postman",
+  Vue: "vuedotjs",
+  Astro: "astro",
+  TypeScript: "typescript",
+  JavaScript: "javascript",
+  "Node.js": "nodedotjs",
+  NestJS: "nestjs",
+  Docker: "docker",
+  MySQL: "mysql",
+};
+
+function getTechIcon(tech: string): string | null {
+  const slug = techIconMap[tech];
+  if (!slug) return null;
+  return `https://cdn.simpleicons.org/${slug}`;
+}
+---
+
+<section id="experiencia" class="wp-exp" aria-label="Sección de experiencia">
+  <div class="wp-exp__container">
+    <h2 class="wp-exp__title">Experiencia & Educación</h2>
+
+    <div class="wp-exp__content">
+      <!-- Experiencia Laboral -->
+      <div class="wp-exp__section">
+        <h3 class="wp-exp__section-title">Experiencia Laboral</h3>
+        <div class="wp-exp__timeline">
+          {
+            jobs.map((job) => (
+              <article class="wp-exp__card" data-animate>
+                <div class="wp-exp__card-dot" role="presentation" />
+                <div class="wp-exp__card-content">
+                  <h4 class="wp-exp__card-title">
+                    {job.title}
+                    {job.current && (
+                      <span class="wp-exp__card-badge">Actual</span>
+                    )}
+                  </h4>
+                  <p class="wp-exp__card-company">{job.company}</p>
+                  <p class="wp-exp__card-period">{job.period}</p>
+                  <p class="wp-exp__card-description">{job.description}</p>
+                  {job.technologies && job.technologies.length > 0 && (
+                    <div class="wp-exp__tags">
+                      {job.technologies.map((tech) => {
+                        const iconUrl = getTechIcon(tech);
+                        return (
+                          <span class="wp-exp__tag">
+                            {iconUrl && (
+                              <img
+                                src={iconUrl}
+                                alt=""
+                                aria-hidden="true"
+                                class="wp-exp__tag-icon"
+                                width="14"
+                                height="14"
+                                loading="lazy"
+                              />
+                            )}
+                            {tech}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Educación -->
+      <div class="wp-exp__section">
+        <h3 class="wp-exp__section-title">Educación</h3>
+        <div class="wp-exp__timeline">
+          {
+            education.map((edu) => (
+              <article class="wp-exp__card" data-animate>
+                <div class="wp-exp__card-dot" role="presentation" />
+                <div class="wp-exp__card-content">
+                  <h4 class="wp-exp__card-title">{edu.institution}</h4>
+                  <p class="wp-exp__card-period">{edu.period}</p>
+                  <p class="wp-exp__card-description">{edu.description}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../scripts/experience.ts"></script>

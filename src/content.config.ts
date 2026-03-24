@@ -20,6 +20,26 @@ const hero = defineCollection({
   }),
 });
 
+const experience = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/experience' }),
+  schema: z.object({
+    jobs: z.array(z.object({
+      title: z.string(),
+      company: z.string(),
+      period: z.string(),
+      description: z.string(),
+      current: z.boolean().optional(),
+      technologies: z.array(z.string()).optional(),
+    })),
+    education: z.array(z.object({
+      institution: z.string(),
+      period: z.string(),
+      description: z.string(),
+    })),
+  }),
+});
+
 export const collections = {
   hero,
+  experience,
 };
