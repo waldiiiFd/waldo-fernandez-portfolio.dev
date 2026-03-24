@@ -1,9 +1,14 @@
 ---
-// src/components/Hero.astro
+import { getCollection } from "astro:content";
 import "../styles/hero.css";
 import { Image } from "astro:assets";
 import mobileImageSrc from "../../public/images/developer-desk-at-night-mobile.webp";
 import desktopImageSrc from "../../public/images/developer-desk-at-night.webp";
+
+const heroEntries = await getCollection("hero");
+const heroEntry = heroEntries[0];
+
+const { name, role, description, ctas, specialties } = heroEntry.data;
 ---
 
 <section id="inicio" class="wp-hero" aria-label="Sección de inicio">
@@ -26,15 +31,56 @@ import desktopImageSrc from "../../public/images/developer-desk-at-night.webp";
     />
   </picture>
   <div class="wp-hero__overlay" aria-hidden="true"></div>
-  <div class="wp-hero__content">
-    <!-- <p>
-      Hola, soy Waldo Fernandez: Ingeniero de Software apasionado por crear experiencias digitales
-      excepcionales. Con una sólida formación en ingeniería informática y
-      experiencia en proyectos de diversa índole, me especializo en el
-      desarrollo de aplicaciones web modernas y eficientes. Mi enfoque se centra
-      en la calidad del código, la usabilidad y la innovación, siempre buscando
-      superar las expectativas de los usuarios y contribuir al éxito de cada
-      proyecto.
-    </p> -->
+
+  <!-- Contenido principal -->
+  <div
+    class="wp-hero__content mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center gap-6"
+  >
+    <!-- Título -->
+    <h1 class="wp-hero__title">
+      Hola, soy {name}
+    </h1>
+
+    <!-- Rol / Badge -->
+    <span class="wp-hero__role">
+      {role}
+    </span>
+
+    <!-- Descripción -->
+    <p class="wp-hero__description max-w-2xl">
+      {description}
+    </p>
+
+    <!-- CTAs -->
+    {ctas && ctas.length > 0 && (
+      <div class="wp-hero__ctas flex flex-wrap justify-center gap-4 mt-2">
+        {ctas.map((cta) => (
+          <a
+            href={cta.href}
+            class:list={[
+              "wp-hero__cta",
+              cta.variant === "primary" ? "wp-hero__cta--primary" : "wp-hero__cta--outline"
+            ]}
+          >
+            {cta.label}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <!-- Specialties -->
+    {specialties && specialties.length > 0 && (
+      <div class="wp-hero__specialties grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-4xl">
+        {specialties.map((specialty) => (
+          <div class="wp-hero__specialty flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors">
+            <div class="wp-hero__specialty-icon" set:html={specialty.icon} />
+            <div class="text-center">
+              <h3 class="wp-hero__specialty-title text-sm font-semibold">{specialty.title}</h3>
+              <p class="wp-hero__specialty-desc text-xs mt-1">{specialty.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </section>

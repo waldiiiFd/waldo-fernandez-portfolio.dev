@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 5rem;
 }
 
 /* ── Background Picture ──────────────────────────────────────── */
@@ -62,5 +63,172 @@
   .wp-hero__bg img {
     animation: none;
     will-change: auto;
+  }
+}
+
+/* ── Título principal ───────────────────────────────────────── */
+.wp-hero__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Badge de rol ────────────────────────────────────────────── */
+.wp-hero__role {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.375rem 1rem;
+  border: 1px solid rgba(108, 144, 195, 0.4);
+  border-radius: 9999px;
+}
+
+/* ── Descripción ─────────────────────────────────────────────── */
+.wp-hero__description {
+  font-size: clamp(0.95rem, 2vw, 1.125rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+/* ── CTAs base ──────────────────────────────────────────────── */
+.wp-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* ── CTA variante primary ───────────────────────────────────── */
+.wp-hero__cta--primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: 2px solid var(--color-primary);
+}
+
+.wp-hero__cta--primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* ── CTA variante outline ───────────────────────────────────── */
+.wp-hero__cta--outline {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid var(--color-accent);
+}
+
+.wp-hero__cta--outline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-navy-deep);
+}
+
+/* ── Especialidades: contenedor del ícono circular ──────────── */
+.wp-hero__specialty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-accent);
+  padding: 1.25rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.wp-hero__specialty-icon:hover,
+.wp-hero__specialty:hover .wp-hero__specialty-icon {
+  border-color: var(--color-secondary);
+  background-color: rgba(108, 144, 195, 0.1);
+}
+
+.wp-hero__specialty-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Especialidades: textos ──────────────────────────────────── */
+.wp-hero__specialty-title {
+  color: #ffffff;
+}
+
+.wp-hero__specialty-desc {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Focus visible para accesibilidad ───────────────────────── */
+.wp-hero__cta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── Specialties Grid ─────────────────────────────────────────── */
+.wp-hero__specialties {
+  margin-top: 2rem;
+}
+
+.wp-hero__specialty {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.wp-hero__specialty:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.wp-hero__specialty-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.wp-hero__specialty-desc {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+/* ── Responsive Specialties ──────────────────────────────────── */
+@media (max-width: 639px) {
+  .wp-hero__specialties {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .wp-hero__specialty {
+    padding: 1rem 0.5rem;
+  }
+
+  .wp-hero__specialty-icon {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.75rem;
+  }
+
+  .wp-hero__specialty-title {
+    font-size: 0.75rem;
+  }
+
+  .wp-hero__specialty-desc {
+    font-size: 0.65rem;
   }
 }
