@@ -38,35 +38,40 @@ function closeMobileMenu(): void {
   header?.classList.remove('menu-open');
 }
 
+let scrollRAF: number | null = null;
+
 function handleScroll(): void {
-  const scrollY = window.scrollY;
-  const isScrolled = scrollY > SCROLL_THRESHOLD;
+  if (scrollRAF !== null) return;
+  
+  scrollRAF = requestAnimationFrame(() => {
+    const scrollY = window.scrollY;
+    const isScrolled = scrollY > SCROLL_THRESHOLD;
 
-  header?.setAttribute('data-scrolled', String(isScrolled));
+    header?.setAttribute('data-scrolled', String(isScrolled));
 
-  // Logo swap — versión optimizada según estado
-  if (isScrolled) {
-    logoImg?.setAttribute('src', '/images/letra-w-40.png');
-    logoImg?.setAttribute('width', '20');
-    logoImg?.setAttribute('height', '20');
-  } else {
-    logoImg?.setAttribute('src', '/images/letra-w-80.png');
-    logoImg?.setAttribute('width', '0');
-    logoImg?.setAttribute('height', '0');
-  }
-
-  // Active link tracking
-  const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
-  let currentSection = '';
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 100;
-    if (scrollY >= sectionTop) {
-      currentSection = section.id;
+    if (isScrolled) {
+      logoImg?.setAttribute('src', '/images/letra-w-40.png');
+      logoImg?.setAttribute('width', '20');
+      logoImg?.setAttribute('height', '20');
+    } else {
+      logoImg?.setAttribute('src', '/images/letra-w-80.png');
+      logoImg?.setAttribute('width', '0');
+      logoImg?.setAttribute('height', '0');
     }
-  });
 
-  updateActiveLink(currentSection);
+    const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
+    let currentSection = '';
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 100;
+      if (scrollY >= sectionTop) {
+        currentSection = section.id;
+      }
+    });
+
+    updateActiveLink(currentSection);
+    scrollRAF = null;
+  });
 }
 
 function updateActiveLink(currentSection: string): void {

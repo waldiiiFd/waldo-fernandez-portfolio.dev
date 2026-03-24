@@ -8,10 +8,16 @@ if (yearSpan) {
 const backToTopBtn = document.getElementById('back-to-top') as HTMLButtonElement | null;
 
 const SCROLL_OFFSET = 300;
+let backToTopRAF: number | null = null;
 
 function handleBackToTopVisibility(): void {
-  const isVisible = window.scrollY > SCROLL_OFFSET;
-  backToTopBtn?.setAttribute('data-visible', String(isVisible));
+  if (backToTopRAF !== null) return;
+  
+  backToTopRAF = requestAnimationFrame(() => {
+    const isVisible = window.scrollY > SCROLL_OFFSET;
+    backToTopBtn?.setAttribute('data-visible', String(isVisible));
+    backToTopRAF = null;
+  });
 }
 
 function scrollToTop(): void {
