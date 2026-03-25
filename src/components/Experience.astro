@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import "../styles/experience.css";
+import { Image } from "astro:assets";
 
 const experienceEntries = await getCollection("experience");
 const experienceEntry = experienceEntries[0];
@@ -63,7 +64,7 @@ function getTechIcon(tech: string): string | null {
                         return (
                           <span class="wp-exp__tag">
                             {iconUrl && (
-                              <img
+                              <Image
                                 src={iconUrl}
                                 alt=""
                                 aria-hidden="true"
