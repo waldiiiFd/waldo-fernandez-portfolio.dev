@@ -9,15 +9,6 @@ const navLinks = document.querySelectorAll('[data-section]') as NodeListOf<HTMLA
 const SCROLL_THRESHOLD = 30;
 
 let isMenuOpen = false;
-let sectionsCache: { id: string; top: number }[] = [];
-
-function cacheSections(): void {
-  const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
-  sectionsCache = Array.from(sections).map((section) => ({
-    id: section.id,
-    top: section.offsetTop,
-  }));
-}
 
 function toggleMobileMenu(): void {
   isMenuOpen = !isMenuOpen;
@@ -47,45 +38,72 @@ function closeMobileMenu(): void {
   header?.classList.remove('menu-open');
 }
 
-let scrollRAF: number | null = null;
-
-function handleScroll(): void {
-  if (scrollRAF !== null) return;
-  
-  scrollRAF = requestAnimationFrame(() => {
-    const scrollY = window.scrollY;
-    const isScrolled = scrollY > SCROLL_THRESHOLD;
-
-    header?.setAttribute('data-scrolled', String(isScrolled));
-
-    if (isScrolled) {
-      logoImg?.setAttribute('src', '/images/letra-w-40.png');
-      logoImg?.setAttribute('width', '20');
-      logoImg?.setAttribute('height', '20');
-    } else {
-      logoImg?.setAttribute('src', '/images/letra-w-80.png');
-      logoImg?.setAttribute('width', '0');
-      logoImg?.setAttribute('height', '0');
-    }
-
-    let currentSection = '';
-
-    for (const section of sectionsCache) {
-      if (scrollY >= section.top - 100) {
-        currentSection = section.id;
-      }
-    }
-
-    updateActiveLink(currentSection);
-    scrollRAF = null;
+function updateActiveLink(sectionId: string): void {
+  navLinks.forEach((link) => {
+    const section = link.getAttribute('data-section');
+    const isActive = section === sectionId;
+    link.classList.toggle('active', isActive);
   });
 }
 
-function updateActiveLink(currentSection: string): void {
-  navLinks.forEach((link) => {
-    const section = link.getAttribute('data-section');
-    const isActive = section === currentSection;
-    link.classList.toggle('active', isActive);
+function initScrollEffects(): void {
+  let lastScrollY = 0;
+  let ticking = false;
+
+  function onScroll(): void {
+    lastScrollY = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const isScrolled = lastScrollY > SCROLL_THRESHOLD;
+
+        header?.setAttribute('data-scrolled', String(isScrolled));
+
+        if (isScrolled) {
+          logoImg?.setAttribute('src', '/images/letra-w-40.png');
+          logoImg?.setAttribute('width', '20');
+          logoImg?.setAttribute('height', '20');
+        } else {
+          logoImg?.setAttribute('src', '/images/letra-w-80.png');
+          logoImg?.setAttribute('width', '0');
+          logoImg?.setAttribute('height', '0');
+        }
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+function initSectionObserver(): void {
+  const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
+  
+  if (sections.length === 0) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      let currentSection = '';
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          currentSection = entry.target.id;
+        }
+      });
+
+      if (currentSection) {
+        updateActiveLink(currentSection);
+      }
+    },
+    {
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0,
+    }
+  );
+
+  sections.forEach((section) => {
+    observer.observe(section);
   });
 }
 
@@ -110,17 +128,5 @@ navLinks.forEach((link) => {
   });
 });
 
-window.addEventListener('scroll', handleScroll, { passive: true });
-
-let resizeRAF: number | null = null;
-window.addEventListener('resize', () => {
-  if (resizeRAF !== null) return;
-  resizeRAF = requestAnimationFrame(() => {
-    cacheSections();
-    handleScroll();
-    resizeRAF = null;
-  });
-});
-
-cacheSections();
-handleScroll();
+initScrollEffects();
+initSectionObserver();
