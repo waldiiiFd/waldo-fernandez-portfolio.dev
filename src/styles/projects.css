@@ -1,0 +1,289 @@
+/* ── Projects Section ────────────────────────────────────────── */
+.wp-projects {
+  background-color: var(--color-navy-mid-30);
+  padding: 5rem 1rem;
+  position: relative;
+}
+
+.wp-projects__container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* ── Título de sección ───────────────────────────────────────── */
+.wp-projects__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-foreground);
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.wp-projects__title::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 0.25rem;
+  background-color: var(--color-accent);
+  margin: 0.75rem auto 0;
+  border-radius: 0.125rem;
+}
+
+/* ── Subsecciones ─────────────────────────────────────────────── */
+.wp-projects__section {
+  margin-bottom: 3rem;
+}
+
+.wp-projects__section:last-child {
+  margin-bottom: 0;
+}
+
+.wp-projects__section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--color-accent);
+}
+
+/* ── Grid de cards ───────────────────────────────────────────── */
+.wp-projects__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .wp-projects__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .wp-projects__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.wp-projects__card {
+  background-color: #ffffff;
+  border: 1px solid var(--color-navy-light-20);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.wp-projects__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(13, 20, 51, 0.12);
+  border-color: var(--color-navy-light-30);
+}
+
+/* ── Card Image ──────────────────────────────────────────────── */
+.wp-projects__card-image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--color-navy-light-10);
+}
+
+.wp-projects__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.wp-projects__card:hover .wp-projects__card-image img {
+  transform: scale(1.05);
+}
+
+/* Overlay con links */
+.wp-projects__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13, 20, 51, 0.85) 0%,
+    rgba(13, 20, 51, 0.4) 50%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wp-projects__card:hover .wp-projects__card-overlay {
+  opacity: 1;
+}
+
+.wp-projects__card-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.wp-projects__card-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  color: #ffffff;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.wp-projects__card-link:hover {
+  background-color: var(--color-accent);
+  transform: scale(1.1);
+}
+
+/* ── Card Content ───────────────────────────────────────────── */
+.wp-projects__card-content {
+  padding: 1.25rem;
+}
+
+.wp-projects__card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.wp-projects__card-role {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+.wp-projects__card-role-label {
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.wp-projects__card-company {
+  color: var(--color-primary);
+}
+
+.wp-projects__card-description {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* ── Tags de tecnologías ─────────────────────────────────────── */
+.wp-projects__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.wp-projects__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--color-foreground);
+  background-color: var(--color-navy-light-10);
+  border: 1px solid var(--color-navy-light-30);
+  border-radius: 9999px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.wp-projects__tag:hover {
+  background-color: var(--color-navy-light-20);
+  border-color: var(--color-foreground);
+}
+
+.wp-projects__tag-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ── Pagination ──────────────────────────────────────────────── */
+.wp-projects__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.wp-projects__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.wp-projects__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.wp-projects__btn:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  transform: scale(1.05);
+}
+
+.wp-projects__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wp-projects__counter {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .wp-projects__card {
+    transition: none;
+  }
+
+  .wp-projects__card:hover {
+    transform: none;
+  }
+
+  .wp-projects__card-image img {
+    transition: none;
+  }
+
+  .wp-projects__card-overlay {
+    opacity: 1;
+  }
+}
