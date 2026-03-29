@@ -21,25 +21,44 @@ const hero = defineCollection({
 });
 
 const experience = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/experience' }),
+  loader: glob({ pattern: 'jobs/*.md', base: './src/content/experience' }),
   schema: z.object({
-    jobs: z.array(z.object({
-      title: z.string(),
-      company: z.string(),
-      period: z.string(),
-      description: z.string(),
-      current: z.boolean().optional(),
-      technologies: z.array(z.string()).optional(),
-    })),
-    education: z.array(z.object({
-      institution: z.string(),
-      period: z.string(),
-      description: z.string(),
-    })),
+    title: z.string(),
+    company: z.string(),
+    period: z.string(),
+    description: z.string(),
+    current: z.boolean().optional(),
+    technologies: z.array(z.string()).optional(),
+  }),
+});
+
+const education = defineCollection({
+  loader: glob({ pattern: 'education/*.md', base: './src/content/experience' }),
+  schema: z.object({
+    institution: z.string(),
+    period: z.string(),
+    description: z.string(),
+  }),
+});
+
+const projects = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/projects' }),
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    thumbnail: image(),
+    technologies: z.array(z.string()),
+    url: z.string().optional(),
+    github: z.string().optional(),
+    role: z.string().optional(),
+    company: z.string().optional(),
+    type: z.enum(['personal', 'institutional']),
   }),
 });
 
 export const collections = {
   hero,
   experience,
+  education,
+  projects,
 };

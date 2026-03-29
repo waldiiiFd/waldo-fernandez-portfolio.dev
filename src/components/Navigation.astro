@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import "../styles/navigation.css";
+import logo80 from '../../public/images/letra-w-80.png';
 
 const navItems = [
   { title: "Inicio", label: "inicio", url: "#inicio" },
@@ -25,19 +27,14 @@ const navItems = [
         class="flex items-center gap-3 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md"
         aria-label="Portafolio de Waldo Fernández - Ir al inicio"
       >
-        <img
-          src="/images/letra-w-80.png"
+        <Image
+          src={logo80}
           alt="Logo Waldo Fernández"
           data-logo
-          width={80}
-          height={80}
           class="w-auto transition-all duration-300"
           loading="eager"
           fetchpriority="high"
         />
-        <span class="hidden md:block text-lg font-semibold tracking-tight">
-          Waldo Fernández
-        </span>
       </a>
 
       <!-- Desktop Nav -->
