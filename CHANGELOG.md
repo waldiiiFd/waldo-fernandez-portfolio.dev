@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.1...v1.0.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* reduce logo size on scroll to match footer ([21824d3](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/21824d3ab1a9704aaf3130331c8d6ea194a5ddcc))
+
 ## [1.0.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.0...v1.0.1) (2026-03-29)
 
 
