@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import "../styles/about.css";
+
+import profileImage from "../assets/images/profile.jpg";
+
+const description = [
+  "Me encanta trabajar con tecnologías modernas y siempre estoy aprendiendo cosas nuevas.",
+  "Me adapto rápidamente a las nuevas tecnologías.",
+  "Me integro eficazmente en equipos multidisciplinarios.",
+  "Creo en escribir código limpio y mantenible, y en crear experiencias de usuario que sean tanto intuitivas como funcionales.",
+];
+---
+
+<section id="sobre-mi" class="wp-about" aria-label="Sección sobre mí">
+  <div class="wp-about__container">
+    <div class="wp-about__grid">
+      <!-- Foto de perfil -->
+      <div class="wp-about__photo-wrapper" data-aos="fade-up" data-aos-delay="0">
+        <div class="wp-about__photo-frame">
+          <Image
+            src={profileImage}
+            alt="Foto de perfil de Waldo Fernández"
+            class="wp-about__photo"
+            width="400"
+            height="400"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Contenido textual -->
+      <div class="wp-about__content" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="wp-about__title">Sobre Mí</h2>
+        
+        <p class="wp-about__lead">
+          Soy un Ingeniero de Software con más de 2 años de experiencia construyendo aplicaciones web que marcan la diferencia.
+        </p>
+
+        <ul class="wp-about__list">
+          {description.map((item) => (
+            <li class="wp-about__list-item">
+              <span class="wp-about__list-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
