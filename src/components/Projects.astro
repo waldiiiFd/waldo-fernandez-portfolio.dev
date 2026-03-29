@@ -40,13 +40,13 @@ function getTechIcon(tech: string): string | null {
 
 <section id="proyectos" class="wp-projects" aria-label="Sección de proyectos">
   <div class="wp-projects__container">
-    <h2 class="wp-projects__title">Proyectos destacados</h2>
+    <h2 class="wp-projects__title" data-aos="fade-up">Proyectos destacados</h2>
 
     <div class="wp-projects__wrapper">
       <div class="wp-projects__grid" data-projects-container>
         {
-          projects.map((project) => (
-            <article class="wp-projects__card">
+          projects.map((project, index) => (
+            <article class="wp-projects__card" data-aos="fade-up" data-aos-delay={index * 100}>
               <div class="wp-projects__card-image">
                 {<Image
                   src={project.thumbnail}
