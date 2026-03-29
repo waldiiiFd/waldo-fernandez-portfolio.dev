@@ -257,13 +257,6 @@ function initContactForm(): void {
   }
 }
 
-function initContactAnimation(): void {
-  // Animation is now handled globally by animations.ts
-  // This function is kept for backwards compatibility but does nothing
-  // to avoid conflicts with the main animation system
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
-  initContactAnimation();
 });
