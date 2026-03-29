@@ -152,6 +152,7 @@ function getTechIcon(tech: string): string | null {
         projects.length > 3 && (
           <div class="wp-projects__pagination">
             <button
+              type="button"
               class="wp-projects__btn wp-projects__btn--prev"
               data-projects-prev
               disabled
@@ -165,6 +166,7 @@ function getTechIcon(tech: string): string | null {
               1 - 3 de {projects.length}
             </span>
             <button
+              type="button"
               class="wp-projects__btn wp-projects__btn--next"
               data-projects-next
               aria-label="Siguientes proyectos"
