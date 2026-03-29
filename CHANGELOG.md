@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.0...v1.0.1) (2026-03-29)
+
+
+### Bug Fixes
+
+* add AOS type declarations in env.d.ts ([4c2126f](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/4c2126fd4ea30ad790755be669e9d252bd4c5624))
+* add GitHub workflows, AOS types, and remove missing og-image ([a9e377b](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/a9e377b508b3c59b19241c8a9a71d4a4d540ddeb))
+* remove missing og-image references ([2aeeb67](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/2aeeb67eaba2a2fca82d74e2a30d72fc43f2658c))
+
 ## 1.0.0 (2026-03-29)
 
 
