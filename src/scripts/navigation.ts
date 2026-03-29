@@ -9,6 +9,15 @@ const navLinks = document.querySelectorAll('[data-section]') as NodeListOf<HTMLA
 const SCROLL_THRESHOLD = 30;
 
 let isMenuOpen = false;
+let sectionsCache: { id: string; top: number }[] = [];
+
+function cacheSections(): void {
+  const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
+  sectionsCache = Array.from(sections).map((section) => ({
+    id: section.id,
+    top: section.offsetTop,
+  }));
+}
 
 function toggleMobileMenu(): void {
   isMenuOpen = !isMenuOpen;
@@ -59,15 +68,13 @@ function handleScroll(): void {
       logoImg?.setAttribute('height', '0');
     }
 
-    const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
     let currentSection = '';
 
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 100;
-      if (scrollY >= sectionTop) {
+    for (const section of sectionsCache) {
+      if (scrollY >= section.top - 100) {
         currentSection = section.id;
       }
-    });
+    }
 
     updateActiveLink(currentSection);
     scrollRAF = null;
@@ -104,4 +111,16 @@ navLinks.forEach((link) => {
 });
 
 window.addEventListener('scroll', handleScroll, { passive: true });
+
+let resizeRAF: number | null = null;
+window.addEventListener('resize', () => {
+  if (resizeRAF !== null) return;
+  resizeRAF = requestAnimationFrame(() => {
+    cacheSections();
+    handleScroll();
+    resizeRAF = null;
+  });
+});
+
+cacheSections();
 handleScroll();
