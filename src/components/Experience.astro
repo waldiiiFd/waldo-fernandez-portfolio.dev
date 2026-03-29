@@ -1,11 +1,18 @@
 ---
 import { getCollection } from "astro:content";
 import "../styles/experience.css";
-import { Image } from "astro:assets";
+import Image from "astro/components/Image.astro";
 
 const experienceEntries = await getCollection("experience");
-const experienceEntry = experienceEntries[0];
-const { jobs, education } = experienceEntry.data;
+const educationEntries = await getCollection("education");
+
+const jobs = experienceEntries
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((entry) => entry.data);
+
+const education = educationEntries
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((entry) => entry.data);
 
 // Mapa tecnología → slug de Simple Icons (https://simpleicons.org)
 const techIconMap: Record<string, string> = {
@@ -41,45 +48,48 @@ function getTechIcon(tech: string): string | null {
     <div class="wp-exp__content">
       <!-- Experiencia Laboral -->
       <div class="wp-exp__section">
-        <h3 class="wp-exp__section-title">Experiencia Laboral</h3>
+        <h3 class="wp-exp__section-title">Experiencia Profesional</h3>
         <div class="wp-exp__timeline">
           {
-            jobs.map((job) => (
-              <article class="wp-exp__card" data-animate>
-                <div class="wp-exp__card-dot" role="presentation" />
-                <div class="wp-exp__card-content">
-                  <h4 class="wp-exp__card-title">
-                    {job.title}
-                    {job.current && (
-                      <span class="wp-exp__card-badge">Actual</span>
+            jobs.map((job, index) => (
+              <article class="wp-exp__card" data-index={index} data-animate>
+                <div class="wp-exp__card-inner">
+                  <div class="wp-exp__card-meta">
+                    <h4 class="wp-exp__card-title">
+                      {job.title}
+                      {job.current && (
+                        <span class="wp-exp__card-badge">Actual</span>
+                      )}
+                    </h4>
+                    <p class="wp-exp__card-company">{job.company}</p>
+                    <p class="wp-exp__card-period">{job.period}</p>
+                  </div>
+                  <div class="wp-exp__card-details">
+                    <p class="wp-exp__card-description">{job.description}</p>
+                    {job.technologies && job.technologies.length > 0 && (
+                      <div class="wp-exp__tags">
+                        {job.technologies.map((tech) => {
+                          const iconUrl = getTechIcon(tech);
+                          return (
+                            <span class="wp-exp__tag">
+                              {iconUrl && (
+                                <Image
+                                  src={iconUrl}
+                                  alt=""
+                                  aria-hidden="true"
+                                  class="wp-exp__tag-icon"
+                                  width="14"
+                                  height="14"
+                                  loading="lazy"
+                                />
+                              )}
+                              {tech}
+                            </span>
+                          );
+                        })}
+                      </div>
                     )}
-                  </h4>
-                  <p class="wp-exp__card-company">{job.company}</p>
-                  <p class="wp-exp__card-period">{job.period}</p>
-                  <p class="wp-exp__card-description">{job.description}</p>
-                  {job.technologies && job.technologies.length > 0 && (
-                    <div class="wp-exp__tags">
-                      {job.technologies.map((tech) => {
-                        const iconUrl = getTechIcon(tech);
-                        return (
-                          <span class="wp-exp__tag">
-                            {iconUrl && (
-                              <Image
-                                src={iconUrl}
-                                alt=""
-                                aria-hidden="true"
-                                class="wp-exp__tag-icon"
-                                width="14"
-                                height="14"
-                                loading="lazy"
-                              />
-                            )}
-                            {tech}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  )}
+                  </div>
                 </div>
               </article>
             ))
@@ -89,16 +99,19 @@ function getTechIcon(tech: string): string | null {
 
       <!-- Educación -->
       <div class="wp-exp__section">
-        <h3 class="wp-exp__section-title">Educación</h3>
+        <h3 class="wp-exp__section-title">Formación Académica</h3>
         <div class="wp-exp__timeline">
           {
-            education.map((edu) => (
-              <article class="wp-exp__card" data-animate>
-                <div class="wp-exp__card-dot" role="presentation" />
-                <div class="wp-exp__card-content">
-                  <h4 class="wp-exp__card-title">{edu.institution}</h4>
-                  <p class="wp-exp__card-period">{edu.period}</p>
-                  <p class="wp-exp__card-description">{edu.description}</p>
+            education.map((edu, index) => (
+              <article class="wp-exp__card" data-index={index + jobs.length} data-animate>
+                <div class="wp-exp__card-inner">
+                  <div class="wp-exp__card-meta">
+                    <h4 class="wp-exp__card-title">{edu.institution}</h4>
+                    <p class="wp-exp__card-period">{edu.period}</p>
+                  </div>
+                  <div class="wp-exp__card-details">
+                    <p class="wp-exp__card-description">{edu.description}</p>
+                  </div>
                 </div>
               </article>
             ))
