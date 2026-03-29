@@ -141,15 +141,15 @@ test.describe('Experience Section', () => {
 
   test.describe('Animations', () => {
     test('cards should have fade-up animations', async ({ page }) => {
-      const cards = page.locator('.wp-exp__card[data-animate="fade-up"]');
+      const cards = page.locator('.wp-exp__card[data-aos="fade-up"]');
       const count = await cards.count();
       expect(count).toBeGreaterThan(0);
     });
 
     test('cards should have animation delay', async ({ page }) => {
       const card = page.locator('.wp-exp__card').first();
-      const dataAnimateDelay = await card.getAttribute('data-animate-delay');
-      expect(dataAnimateDelay).toBeTruthy();
+      const dataAosDelay = await card.getAttribute('data-aos-delay');
+      expect(dataAosDelay).toBeTruthy();
     });
   });
 
