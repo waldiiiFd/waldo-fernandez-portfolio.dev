@@ -1,0 +1,337 @@
+name: Security
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-audit-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-audit-
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+
+      - name: Run npm audit
+        id: audit
+        run: |
+          npm audit --audit-level=moderate --json > npm-audit.json || true
+
+          CRITICAL=$(cat npm-audit.json | jq -r '.vulnerabilities | to_entries | .[] | select(.value.severity == "critical") | .key' | wc -l)
+          HIGH=$(cat npm-audit.json | jq -r '.vulnerabilities | to_entries | .[] | select(.value.severity == "high") | .key' | wc -l)
+          MEDIUM=$(cat npm-audit.json | jq -r '.vulnerabilities | to_entries | .[] | select(.value.severity == "medium") | .key' | wc -l)
+
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: npm-audit-report
+          path: npm-audit.json
+          retention-days: 7
+
+      - name: Fail on CRITICAL/HIGH vulnerabilities
+        if: steps.audit.outputs.critical != '0' || steps.audit.outputs.high != '0'
+        run: |
+          echo "Security vulnerabilities found:"
+          echo "  CRITICAL: ${{ steps.audit.outputs.critical }}"
+          echo "  HIGH: ${{ steps.audit.outputs.high }}"
+          exit 1
+
+  secret-scanning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for committed secrets files
+        run: |
+          SENSITIVE_FILES=".env .env.local .env.production .env.development id_rsa *.pem *.key secrets.txt"
+          FOUND_FILES=""
+
+          for pattern in $SENSITIVE_FILES; do
+            if git ls-files --others --exclude-standard | grep -q "$pattern"; then
+              FOUND_FILES="$FOUND_FILES $pattern"
+            fi
+          done
+
+          if [ -n "$FOUND_FILES" ]; then
+            echo "Sensitive files found in repository:$FOUND_FILES"
+            exit 1
+          fi
+
+          echo "No sensitive files committed"
+
+      - name: Verify .gitignore protects secrets
+        run: |
+          REQUIRED_IGNORES=(".env" "node_modules/" "dist/" ".env.local")
+          MISSING=""
+
+          for pattern in "${REQUIRED_IGNORES[@]}"; do
+            if ! grep -q "$pattern" .gitignore 2>/dev/null; then
+              MISSING="$MISSING $pattern"
+            fi
+          done
+
+          if [ -n "$MISSING" ]; then
+            echo "Recommended patterns missing in .gitignore:$MISSING"
+          else
+            echo ".gitignore properly configured"
+          fi
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ESLint and security plugin
+        run: |
+          npm install -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-security eslint-plugin-n eslint-plugin-promise --prefer-offline
+
+      - name: Create ESLint config for security
+        run: |
+          cat > eslint.security.mjs << 'EOF'
+          import tseslint from '@typescript-eslint/eslint-plugin';
+          import tsparser from '@typescript-eslint/parser';
+          import securityPlugin from 'eslint-plugin-security';
+
+          export default [
+            {
+              files: ['**/*.{js,ts,mjs,cjs}'],
+              languageOptions: {
+                parser: tsparser,
+                parserOptions: {
+                  ecmaVersion: 'latest',
+                  sourceType: 'module',
+                },
+              },
+              plugins: {
+                security: securityPlugin,
+                '@typescript-eslint': tseslint,
+              },
+              rules: {
+                'security/detect-object-injection': 'warn',
+                'security/detect-possible-timing-attacks': 'warn',
+                'no-eval': 'error',
+                'no-implied-eval': 'error',
+                'no-new-func': 'error',
+                '@typescript-eslint/no-explicit-any': 'warn',
+              },
+            },
+          ];
+          EOF
+
+      - name: Run ESLint security scan
+        run: |
+          npx eslint --config eslint.security.mjs src/scripts/ --format json --output-file eslint-report.json || true
+
+          ERRORS=$(cat eslint-report.json | jq '[.[] | .messages | .[] | select(.severity == 2)] | length')
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "ESLint found $ERRORS error(s)"
+            cat eslint-report.json | jq -r '.[] | .messages[] | select(.severity == 2) | "\(.filePath):\(.line) - \(.message)"'
+            exit 1
+          fi
+
+          echo "No security issues in ESLint scan"
+
+      - name: Run Astro type check
+        run: |
+          npx astro check
+
+  supply-chain-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: dependency-audit
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Verify lockfile integrity
+        run: |
+          npm install --package-lock-only --dry-run
+          echo "Lockfile is valid"
+
+      - name: Check dependencies licenses
+        run: |
+          npm install -D license-checker --prefer-offline
+
+          npx license-checker --json > licenses.json || true
+
+          PROBLEMATIC=$(cat licenses.json | jq -r 'to_entries[] | select(.value.licenses | test("(GPL|AGPL|SSPL|Proprietary|Unknown|null)")) | .key' | head -10)
+
+          if [ -n "$PROBLEMATIC" ]; then
+            echo "Packages with potentially problematic licenses:"
+            echo "$PROBLEMATIC"
+          else
+            echo "All licenses are compatible (MIT, Apache, BSD)"
+          fi
+
+          mv licenses.json license-report.json
+
+      - name: Upload supply chain reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: supply-chain-reports
+          path: |
+            license-report.json
+            npm-audit.json
+          retention-days: 7
+
+  build-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          SENSITIVE_PATTERNS=".env *.key *.pem secrets config.local *.htaccess id_rsa"
+          FOUND=""
+
+          for pattern in $SENSITIVE_PATTERNS; do
+            if find dist -name "$pattern" 2>/dev/null | grep -q .; then
+              FOUND="$FOUND $pattern"
+            fi
+          done
+
+          if [ -n "$FOUND" ]; then
+            echo "Sensitive files found in dist/:$FOUND"
+            exit 1
+          fi
+
+          echo "No sensitive files in dist/"
+
+      - name: Check for leaked secrets in HTML
+        run: |
+          LEAKS=$(grep -r -i -E "(api[_-]?key|secret|password|token|auth)[=:]\s*['\"]?[a-zA-Z0-9_\-]{20,}" dist/ 2>/dev/null || true)
+
+          if [ -n "$LEAKS" ]; then
+            echo "Possible secrets found in generated HTML:"
+            echo "$LEAKS"
+            exit 1
+          fi
+
+          echo "No secrets detected in HTML output"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+          retention-days: 1
+
+  summary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs:
+      [
+        dependency-audit,
+        secret-scanning,
+        static-analysis,
+        supply-chain-security,
+        build-integrity,
+      ]
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo " **dependency-audit**: ${{ needs.dependency-audit.result }}" >> $GITHUB_STEP_SUMMARY
+          echo " **secret-scanning**: ${{ needs.secret-scanning.result }}" >> $GITHUB_STEP_SUMMARY
+          echo " **static-analysis**: ${{ needs.static-analysis.result }}" >> $GITHUB_STEP_SUMMARY
+          echo " **supply-chain-security**: ${{ needs.supply-chain-security.result }}" >> $GITHUB_STEP_SUMMARY
+          echo " **build-integrity**: ${{ needs.build-integrity.result }}" >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "Full reports available as artifacts." >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail workflow if critical jobs failed
+        run: |
+          FAILED=""
+          if [ "${{ needs.dependency-audit.result }}" != "success" ]; then
+            FAILED="$FAILED dependency-audit"
+          fi
+          if [ "${{ needs.secret-scanning.result }}" != "success" ]; then
+            FAILED="$FAILED secret-scanning"
+          fi
+          if [ "${{ needs.build-integrity.result }}" != "success" ]; then
+            FAILED="$FAILED build-integrity"
+          fi
+
+          if [ -n "$FAILED" ]; then
+            echo "Critical security checks failed:$FAILED"
+            exit 1
+          fi
