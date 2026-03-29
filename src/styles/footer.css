@@ -8,6 +8,11 @@
   color: var(--color-text-on-dark);
 }
 
+/* Logo blanco */
+.wp-footer img {
+  filter: brightness(0) invert(1);
+}
+
 /* ── Separador superior decorativo ──────────────────────────── */
 .wp-footer__divider {
   height: 1px;

@@ -37,23 +37,23 @@ const { name, role, description, ctas, specialties } = heroEntry.data;
     class="wp-hero__content mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center gap-6"
   >
     <!-- Título -->
-    <h1 class="wp-hero__title" data-aos="fade-up" data-aos-delay="0">
+    <h1 class="wp-hero__title animate-fade-up animate-delay-0" data-animate="fade-up">
       Hola, soy {name}
     </h1>
 
     <!-- Rol / Badge -->
-    <span class="wp-hero__role" data-aos="fade-up" data-aos-delay="100">
+    <span class="wp-hero__role animate-fade-up animate-delay-100" data-animate="fade-up">
       {role}
     </span>
 
     <!-- Descripción -->
-    <p class="wp-hero__description max-w-2xl" data-aos="fade-up" data-aos-delay="200">
+    <p class="wp-hero__description max-w-2xl animate-fade-up animate-delay-200" data-animate="fade-up">
       {description}
     </p>
 
     <!-- CTAs -->
     {ctas && ctas.length > 0 && (
-      <div class="wp-hero__ctas flex flex-wrap justify-center gap-4 mt-2" data-aos="fade-up" data-aos-delay="300">
+      <div class="wp-hero__ctas flex flex-wrap justify-center gap-4 mt-2 animate-fade-up animate-delay-300" data-animate="fade-up">
         {ctas.map((cta) => (
           <a
             href={cta.href}
@@ -70,7 +70,7 @@ const { name, role, description, ctas, specialties } = heroEntry.data;
 
     <!-- Specialties -->
     {specialties && specialties.length > 0 && (
-      <div class="wp-hero__specialties grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-4xl" data-aos="fade-up" data-aos-delay="400">
+      <div class="wp-hero__specialties grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-4xl animate-fade-up animate-delay-400" data-animate="fade-up">
         {specialties.map((specialty) => (
           <div class="wp-hero__specialty flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-colors">
             <div class="wp-hero__specialty-icon" set:html={specialty.icon} />

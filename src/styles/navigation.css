@@ -23,10 +23,18 @@
   height: 5rem;
 }
 
-[data-header][data-scrolled="false"] img {
+/* Logo blanco */
+[data-header] img {
   width: 48px;
   height: 48px;
   filter: brightness(0) invert(1);
+}
+
+/* Menú hamburguesa blanco */
+[data-header] #mobile-menu-toggle,
+[data-header] .menu-icon,
+[data-header] .close-icon {
+  color: #ffffff;
 }
 
 [data-header][data-scrolled="false"] .nav-link,
@@ -38,10 +46,6 @@
 [data-header][data-scrolled="false"] .nav-link.active {
   color: #ffffff;
   background-color: var(--color-navy-light-20);
-}
-
-[data-header][data-scrolled="false"] #mobile-menu-toggle {
-  color: var(--color-text-on-dark);
 }
 
 /* ── Estado compacto — al hacer scroll ──────────────────────── */
@@ -67,20 +71,12 @@
   background-color: var(--color-accent);
 }
 
-[data-header][data-scrolled="true"] #mobile-menu-toggle {
-  color: var(--color-secondary);
-}
-
 /* ── Menú abierto — fondo opaco en todo el header ───────────── */
 [data-header].menu-open {
   background-color: var(--color-navy-deep) !important;
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-bottom: 1px solid var(--color-navy-light-30);
-}
-
-[data-header].menu-open #mobile-menu-toggle {
-  color: var(--color-text-on-dark);
 }
 
 /* ── Mobile menu — sin gaps, fondo heredado del header ──────── */

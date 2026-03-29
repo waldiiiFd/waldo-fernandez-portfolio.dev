@@ -52,7 +52,7 @@ function getTechIcon(tech: string): string | null {
         <div class="wp-exp__timeline">
           {
             jobs.map((job, index) => (
-              <article class="wp-exp__card" data-index={index} data-aos="fade-up" data-aos-delay={index * 80}>
+              <article class="wp-exp__card" data-index={index} data-animate="fade-up" data-animate-delay={index * 80}>
                 <div class="wp-exp__card-inner">
                   <div class="wp-exp__card-meta">
                     <h4 class="wp-exp__card-title">
@@ -103,7 +103,7 @@ function getTechIcon(tech: string): string | null {
         <div class="wp-exp__timeline">
           {
             education.map((edu, index) => (
-              <article class="wp-exp__card" data-index={index + jobs.length} data-aos="fade-up" data-aos-delay={(index + jobs.length) * 80}>
+              <article class="wp-exp__card" data-index={index + jobs.length} data-animate="fade-up" data-animate-delay={(index + jobs.length) * 80}>
                 <div class="wp-exp__card-inner">
                   <div class="wp-exp__card-meta">
                     <h4 class="wp-exp__card-title">{edu.institution}</h4>

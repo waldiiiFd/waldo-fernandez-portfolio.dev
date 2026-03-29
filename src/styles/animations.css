@@ -1,0 +1,55 @@
+@layer utilities {
+  .animate-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+  }
+
+  .animate-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .animate-delay-0 { transition-delay: 0ms; }
+  .animate-delay-80 { transition-delay: 80ms; }
+  .animate-delay-100 { transition-delay: 100ms; }
+  .animate-delay-200 { transition-delay: 200ms; }
+  .animate-delay-300 { transition-delay: 300ms; }
+  .animate-delay-400 { transition-delay: 400ms; }
+  .animate-delay-500 { transition-delay: 500ms; }
+  .animate-delay-600 { transition-delay: 600ms; }
+  .animate-delay-700 { transition-delay: 700ms; }
+  .animate-delay-800 { transition-delay: 800ms; }
+  .animate-delay-900 { transition-delay: 900ms; }
+  .animate-delay-1000 { transition-delay: 1000ms; }
+
+  /* Accessibility: respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-up {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .animate-fade-up.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .animate-delay-0,
+    .animate-delay-80,
+    .animate-delay-100,
+    .animate-delay-200,
+    .animate-delay-300,
+    .animate-delay-400,
+    .animate-delay-500,
+    .animate-delay-600,
+    .animate-delay-700,
+    .animate-delay-800,
+    .animate-delay-900,
+    .animate-delay-1000 {
+      transition-delay: 0ms !important;
+    }
+  }
+}
