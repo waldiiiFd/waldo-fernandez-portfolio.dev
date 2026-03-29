@@ -1,0 +1,32 @@
+name: release-please
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release-type: simple
+
+      - name: Create Release Summary
+        if: ${{ steps.release.outputs.releases_created }}
+        run: |
+          TAG_NAME="${{ steps.release.outputs.tag_name }}"
+          BODY="${{ steps.release.outputs.body }}"
+          
+          echo "## Release $TAG_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "$BODY" >> $GITHUB_STEP_SUMMARY
