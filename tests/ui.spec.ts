@@ -145,28 +145,28 @@ test.describe('UI - Componentes Visuales', () => {
   });
 
   test.describe('Animations', () => {
-    test('elements with data-animate should exist', async ({ page }) => {
-      const animatedElements = page.locator('[data-animate]');
+    test('elements with data-aos should exist', async ({ page }) => {
+      const animatedElements = page.locator('[data-aos]');
       const count = await animatedElements.count();
       expect(count).toBeGreaterThan(0);
     });
 
     test('hero section should have animations', async ({ page }) => {
-      const heroElements = page.locator('#inicio [data-animate]');
+      const heroElements = page.locator('#inicio [data-aos]');
       const count = await heroElements.count();
       expect(count).toBeGreaterThan(0);
     });
 
     test('projects should have animated cards', async ({ page }) => {
       await page.locator('#proyectos').scrollIntoViewIfNeeded();
-      const projectCards = page.locator('#proyectos .wp-projects__card[data-animate]');
+      const projectCards = page.locator('#proyectos .wp-projects__card[data-aos]');
       const count = await projectCards.count();
       expect(count).toBeGreaterThan(0);
     });
 
     test('experience cards should have animations', async ({ page }) => {
       await page.locator('#experiencia').scrollIntoViewIfNeeded();
-      const cards = page.locator('.wp-exp__card[data-animate]');
+      const cards = page.locator('.wp-exp__card[data-aos]');
       const count = await cards.count();
       expect(count).toBeGreaterThan(0);
     });

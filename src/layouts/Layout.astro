@@ -3,7 +3,7 @@ import Header from '../components/Header.astro';
 import Loader from '../components/Loader.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-import '../styles/animations.css';
+import 'aos/dist/aos.css';
 ---
 
 <!doctype html>
@@ -44,10 +44,16 @@ import '../styles/animations.css';
     </main>
     <Footer />
     <script>
-      import { initAnimations } from '../scripts/animations';
+      import AOS from 'aos';
       
       document.addEventListener('DOMContentLoaded', () => {
-        initAnimations({ once: true });
+        AOS.init({
+          duration: 600,
+          easing: 'ease-out-cubic',
+          once: true,
+          offset: 100,
+          startEvent: 'DOMContentLoaded',
+        });
       });
     </script>
   </body>
