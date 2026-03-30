@@ -23,10 +23,8 @@
   height: 5rem;
 }
 
-/* Logo blanco */
+/* Logo - solo filtro, tamaño manejado por Tailwind */
 [data-header] img {
-  width: 48px;
-  height: 48px;
   filter: brightness(0) invert(1);
 }
 
@@ -66,8 +64,15 @@
 }
 
 [data-header][data-scrolled="true"] img {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
+}
+
+@media (min-width: 768px) {
+  [data-header][data-scrolled="true"] img {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 [data-header][data-scrolled="true"] .nav-link {
