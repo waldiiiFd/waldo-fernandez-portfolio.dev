@@ -39,7 +39,7 @@ specialties:
         <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
       </svg>
   - title: "DevOps"
-    description: "Git, Docker, Bash. Manteniendo código de calidad."
+    description: "Git, CI/CD, Docker, Bash. Manteniendo código de calidad."
     icon: |
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="3"/>

@@ -48,9 +48,13 @@
   background-color: var(--color-navy-light-20);
 }
 
-/* ── Estado compacto — al hacer scroll ──────────────────────── */
+/* ── Estado compacto — al hacer scroll (mismo color que footer) ─ */
 [data-header][data-scrolled="true"] {
-  background-color: var(--color-navy-deep-92);
+  background: linear-gradient(
+    to bottom,
+    var(--color-navy-royal),
+    var(--color-navy-deep)
+  );
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-bottom: 1px solid var(--color-navy-light-30);
