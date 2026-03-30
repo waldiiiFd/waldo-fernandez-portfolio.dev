@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.3...v1.1.0) (2026-03-30)
+
+
+### Features
+
+* add sitemap integration for SEO ([ae7595e](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/ae7595e9f33b3746e34435dc5376064912014071))
+
 ## [1.0.3](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.2...v1.0.3) (2026-03-30)
 
 
