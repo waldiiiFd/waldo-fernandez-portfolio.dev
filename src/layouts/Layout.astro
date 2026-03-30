@@ -1,9 +1,9 @@
 ---
-import Header from '../components/Header.astro';
-import Loader from '../components/Loader.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css';
-import 'aos/dist/aos.css';
+import Header from "../components/Header.astro";
+import Loader from "../components/Loader.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+import "aos/dist/aos.css";
 ---
 
 <!doctype html>
@@ -18,41 +18,59 @@ import 'aos/dist/aos.css';
     <link rel="icon" type="image/png" href="/letra-w.png" />
     <link rel="icon" type="image/svg+xml" href="/letra-w.png" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="google-site-verification" content="4Sv6dK6_mv_zfnr9FzfL3L64gShqMK66-gh8L4LEe6Y" />
-    
+    <meta
+      name="google-site-verification"
+      content="4Sv6dK6_mv_zfnr9FzfL3L64gShqMK66-gh8L4LEe6Y"
+    />
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://waldo-fernandez-dev.netlify.app/" />
-    
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
     <!-- Open Graph -->
     <meta property="og:title" content="Portafolio de Waldo Fernández" />
-    <meta property="og:description" content="Portafolio de Waldo Fernández, 2 años de experiencia como Ingeniero de Software" />
+    <meta
+      property="og:description"
+      content="Portafolio de Waldo Fernández, 2 años de experiencia como Ingeniero de Software"
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://waldo-fernandez-dev.netlify.app/" />
-    
+    <meta
+      property="og:url"
+      content="https://waldo-fernandez-dev.netlify.app/"
+    />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Waldo Fernández | Full Stack Developer" />
-    <meta name="twitter:description" content="Waldo Fernández | Full Stack Developer" />
-    
+    <meta
+      name="twitter:title"
+      content="Waldo Fernández | Full Stack Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="Waldo Fernández | Full Stack Developer"
+    />
+
     <title>Portafolio de Waldo Fernández</title>
   </head>
   <body class="antialiased">
-  	<Loader />
+    <Loader />
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
     <script>
-      import AOS from 'aos';
-      
-      document.addEventListener('DOMContentLoaded', () => {
+      import AOS from "aos";
+
+      document.addEventListener("DOMContentLoaded", () => {
         AOS.init({
           duration: 600,
-          easing: 'ease-out-cubic',
+          easing: "ease-out-cubic",
           once: true,
           offset: 100,
-          startEvent: 'DOMContentLoaded',
+          startEvent: "DOMContentLoaded",
         });
       });
     </script>
