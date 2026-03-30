@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.2...v1.0.3) (2026-03-30)
+
+
+### Bug Fixes
+
+* match nav scrolled background with footer gradient ([c517787](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/c517787e47cf404ca3dbf339105d346048092af8))
+
 ## [1.0.2](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.1...v1.0.2) (2026-03-29)
 
 
