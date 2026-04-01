@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.1.1...v1.2.0) (2026-04-01)
+
+
+### Features
+
+* add CV download link to footer ([c8675e4](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/c8675e41426b2056f85f02ebfe8c335f63e599d1))
+
 ## [1.1.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.1.0...v1.1.1) (2026-03-30)
 
 
