@@ -32,6 +32,14 @@ const contactInfo = [
     svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>`,
   },
   {
+    icon: "download",
+    label: "Currículum",
+    value: "Descargar CV",
+    href: "/cv/Waldo_Fernandez_CV.pdf",
+    target: "_blank",
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+  },
+  {
     icon: "location",
     label: "Ubicación",
     value: "La Habana, Cuba",
@@ -79,7 +87,7 @@ const contactInfo = [
       </h3>
       <ul class="flex flex-col gap-3" role="list">
         {
-          contactInfo.map(({ svg, label, value, href }) => (
+          contactInfo.map(({ svg, label, value, href, target }) => (
             <li class="wp-footer__contact-item">
               <span class="wp-footer__contact-icon" set:html={svg} />
               <span class="wp-footer__contact-label text-[0.7rem] font-medium uppercase tracking-wide">
@@ -88,6 +96,8 @@ const contactInfo = [
               {href ? (
                 <a
                   href={href}
+                  target={target || undefined}
+                  rel={target ? "noopener noreferrer" : undefined}
                   class="wp-footer__contact-value wp-footer__contact-link text-sm"
                 >
                   {value}
