@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.1.0...v1.1.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* make logo responsive with proper dimensions per breakpoint ([fb9cf74](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/fb9cf74939811038856e23b3b9a2afa361b16f6a))
+* make logo responsive with proper dimensions per breakpoint ([8a6e17b](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/8a6e17b0bd91d3dd35a444b4ec98f066331f2268))
+
 ## [1.1.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.0.3...v1.1.0) (2026-03-30)
 
 
