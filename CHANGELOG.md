@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.2.0...v1.3.0) (2026-04-07)
+
+
+### Features
+
+* update profile image and contact section styles ([1f89bf9](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/1f89bf9b0659bdb1969c5ca26faaf224a9859666))
+* update profile image and contact section styles ([eb52116](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/eb52116f509f1f8668c81d8dcb2464963b84fd00))
+
 ## [1.2.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.1.1...v1.2.0) (2026-04-01)
 
 
