@@ -1,6 +1,6 @@
 /* ── Contact Section ───────────────────────────────────────── */
 .wp-contact {
-  background-color: var(--color-background);
+  background-color: var(--color-navy-light-10);
   padding: 5rem 1rem;
   position: relative;
 }
@@ -195,7 +195,11 @@
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-hover) 100%
+  );
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
