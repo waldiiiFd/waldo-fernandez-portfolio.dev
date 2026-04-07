@@ -20,7 +20,7 @@
     "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.2.2",
     "aos": "^2.3.4",
-    "astro": "^6.0.8",
+    "astro": "^6.1.4",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3"
   },
