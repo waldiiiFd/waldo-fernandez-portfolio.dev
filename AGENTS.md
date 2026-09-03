@@ -171,6 +171,19 @@ npm run astro -- check
 - Branch naming: `feature/`, `fix/`, `chore/`
 - Never commit `node_modules/`, `.env`, `.astro/` (generated types)
 
+## 🔒 Security & Dependency Workflow
+
+Para evitar vulnerabilidades en producción, sigue este flujo al realizar cambios en dependencias:
+
+1. **npm audit** - Ejecuta `npm audit` antes y después de cualquier cambio de dependencias
+2. **Actualizar individualmente** - Actualiza packages uno por uno o en grupos pequeños para identificar qué cambio introdujo un problema
+3. **`npm audit fix`** - Ejecuta `npm audit fix` para auto-corregir vulnerabilibles conocidas
+4. **`npm audit fix --force`** - Solo si es necesario, para actualizaciones mayores (mayor versión de framework)
+5. **Verificar build** - Confirma que `npm run build` pasa exitosamente después de las actualizaciones
+6. **Commit y PR** - Haz commit a `dev` y crea PR a `main` con descripción clara de qué vulnerabilities se corrigieron
+
+*Ejemplo reciente: Actualización de Astro `^6.1.4` → `^7.2.10` + 5 transitive dependencies, reduciendo 29 HIGH → 0 vulnerabilidades.*
+
 ## Available Skills
 
 | Skill | Trigger | Description |

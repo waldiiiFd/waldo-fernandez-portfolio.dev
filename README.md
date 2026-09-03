@@ -12,19 +12,21 @@ Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
-├── public/
+├ public/
 │   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+├ src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
 └── package.json
 ```
+
+> ⚠️ **Important**: Before committing dependency changes, always run `npm audit` to check for security vulnerabilities. See the project AGENTS.md for the complete security workflow checklist.
 
 To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
