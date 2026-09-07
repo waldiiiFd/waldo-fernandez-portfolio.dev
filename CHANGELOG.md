@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.3.0...v1.4.0) (2026-09-07)
+
+
+### Features
+
+* update CV document ([205cd1d](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/205cd1db75e4f2b0bce173240c334a31dd85acd2))
+* update CV document with new format and experience ([f68ce02](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/f68ce02ea576be68ad8db961300ba02ea9232c14))
+
 ## [1.3.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.2.0...v1.3.0) (2026-04-07)
 
 
