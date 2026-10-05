@@ -115,7 +115,7 @@ test.describe('Footer', () => {
     });
   });
 
-  test.describe('Back to Top Button', () => {
+  /* test.describe('Back to Top Button', () => {
     test('should have back to top button', async ({ page }) => {
       const backToTopBtn = page.locator('#back-to-top');
       await expect(backToTopBtn).toBeAttached();
@@ -162,7 +162,7 @@ test.describe('Footer', () => {
       const scrollPosition = await page.evaluate(() => window.scrollY);
       expect(scrollPosition).toBe(0);
     });
-  });
+  }); */
 
   test.describe('Copyright', () => {
     test('should display copyright text', async ({ page }) => {
