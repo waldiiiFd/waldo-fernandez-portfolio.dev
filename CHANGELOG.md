@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.4.0...v1.5.0) (2026-10-05)
+
+
+### Features
+
+* add new profile image. Delete button back-to-top ([e921147](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/e9211470cce34a6580f71755b6af5866df989c18))
+* replace profile image, remove back-to-top button & patch 4 vulnerabilities ([92d1309](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/92d13091eccef35fa65fb75e307e50b0175f4d19))
+
 ## [1.4.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.3.0...v1.4.0) (2026-09-07)
 
 
