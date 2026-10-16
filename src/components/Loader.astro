@@ -2,14 +2,30 @@
 import '../styles/loader.css';
 ---
 
-<!-- Loader - Newton's Cradle Animation -->
-<div id="page-loader" class="page-loader">
-  <div class="newtons-cradle">
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
+<!-- Loader - Monograma "W" trazado sobre fondo navy -->
+<div
+  id="page-loader"
+  class="page-loader"
+  role="status"
+  aria-live="polite"
+  aria-label="Cargando portafolio"
+>
+  <div class="page-loader__content flex flex-col items-center gap-6">
+    <svg
+      class="page-loader__mark"
+      viewBox="0 0 64 56"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        class="page-loader__stroke"
+        pathLength="1"
+        d="M4 6 L18 50 L32 14 L46 50 L60 6"
+      ></path>
+    </svg>
+    <span class="page-loader__line" aria-hidden="true"></span>
   </div>
+  <span class="sr-only">Cargando…</span>
 </div>
 
 <script src="../scripts/loader.ts"></script>

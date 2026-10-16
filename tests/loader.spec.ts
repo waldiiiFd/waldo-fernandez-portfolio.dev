@@ -8,16 +8,16 @@ test.describe('Loader', () => {
       await expect(loader).toBeAttached();
     });
 
-    test('should have newtons-cradle structure', async ({ page }) => {
+    test('should have W monogram structure', async ({ page }) => {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
-      const cradle = page.locator('.newtons-cradle');
-      await expect(cradle).toBeAttached();
+      const mark = page.locator('.page-loader__mark');
+      await expect(mark).toBeAttached();
     });
 
-    test('should have 4 cradle dots', async ({ page }) => {
+    test('should have a single stroke path and progress line', async ({ page }) => {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
-      const dots = page.locator('.newtons-cradle__dot');
-      await expect(dots).toHaveCount(4);
+      await expect(page.locator('.page-loader__stroke')).toHaveCount(1);
+      await expect(page.locator('.page-loader__line')).toHaveCount(1);
     });
   });
 

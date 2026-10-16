@@ -1,15 +1,26 @@
 /* ── Page Loader Styles ──────────────────────────────── */
-/* Estilos para el loader de página */
+/* Monograma "W" que se traza con una línea fina sobre un
+   fondo navy con halo suave. Un solo gesto de movimiento. */
 
 .page-loader {
+  --loader-draw: 0.9s;
+  --loader-exit: 0.45s; /* Sincronizar con EXIT_DURATION_MS en loader.ts */
+  --loader-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-navy-deep);
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 46%,
+    var(--color-navy-royal) 0%,
+    var(--color-navy-deep) 72%
+  );
   z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity var(--loader-exit) ease,
+    visibility var(--loader-exit) ease;
 }
 
 .page-loader.hidden {
@@ -18,77 +29,109 @@
   pointer-events: none;
 }
 
-/* ── Newton's Cradle Animation ────────────────────── */
-/* Animación de péndulo de Newton - From Uiverse.io */
-
-.newtons-cradle {
-  --uib-size: 50px;
-  --uib-speed: 1.2s;
-  --uib-color: var(--color-accent);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--uib-size);
-  height: var(--uib-size);
+/* ── Contenido: sale con un leve ascenso ─────────────── */
+.page-loader__content {
+  transition:
+    opacity var(--loader-exit) ease,
+    transform var(--loader-exit) ease;
 }
 
-.newtons-cradle__dot {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 25%;
-  transform-origin: center top;
+.page-loader.hidden .page-loader__content {
+  opacity: 0;
+  transform: translateY(-0.5rem);
 }
 
-.newtons-cradle__dot::after {
-  content: '';
+/* ── Monograma W ─────────────────────────────────────── */
+.page-loader__mark {
+  width: 3.5rem;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px var(--color-navy-light-30));
+}
+
+.page-loader__stroke {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Guion + hueco > 1 evita un punto residual al inicio del trazo */
+  stroke-dasharray: 1 1.5;
+  stroke-dashoffset: 1;
+  animation:
+    loader-draw var(--loader-draw) var(--loader-ease) 0.1s forwards,
+    loader-breathe 2.6s ease-in-out calc(var(--loader-draw) + 0.1s) infinite;
+}
+
+/* ── Línea fina de progreso ──────────────────────────── */
+.page-loader__line {
+  position: relative;
   display: block;
-  width: 100%;
-  height: 25%;
-  border-radius: 50%;
-  background-color: var(--uib-color);
+  width: 7rem;
+  height: 1px;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-navy-light-40),
+    transparent
+  );
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: loader-line var(--loader-draw) var(--loader-ease) 0.3s forwards;
 }
 
-.newtons-cradle__dot:first-child {
-  animation: swing var(--uib-speed) linear infinite;
+/* Destello que recorre la línea mientras la página termina de cargar */
+.page-loader__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  transform: translateX(-100%);
+  animation: loader-sweep 1.8s ease-in-out calc(var(--loader-draw) + 0.3s) infinite;
 }
 
-.newtons-cradle__dot:last-child {
-  animation: swing2 var(--uib-speed) linear infinite;
+/* ── Keyframes ───────────────────────────────────────── */
+@keyframes loader-draw {
+  to { stroke-dashoffset: 0; }
 }
 
-@keyframes swing {
-  0% {
-    transform: rotate(0deg);
-    animation-timing-function: ease-out;
-  }
-
-  25% {
-    transform: rotate(70deg);
-    animation-timing-function: ease-in;
-  }
-
-  50% {
-    transform: rotate(0deg);
-    animation-timing-function: linear;
-  }
+@keyframes loader-line {
+  to { transform: scaleX(1); }
 }
 
-@keyframes swing2 {
-  0% {
-    transform: rotate(0deg);
-    animation-timing-function: linear;
+@keyframes loader-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.65; }
+}
+
+@keyframes loader-sweep {
+  to { transform: translateX(250%); }
+}
+
+/* ── Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__stroke {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 
-  50% {
-    transform: rotate(0deg);
-    animation-timing-function: ease-out;
+  .page-loader__line {
+    animation: none;
+    transform: scaleX(1);
   }
 
-  75% {
-    transform: rotate(-70deg);
-    animation-timing-function: ease-in;
+  .page-loader__line::after {
+    animation: none;
+    display: none;
+  }
+
+  .page-loader__content {
+    transition: opacity var(--loader-exit) ease;
+  }
+
+  .page-loader.hidden .page-loader__content {
+    transform: none;
   }
 }
