@@ -1,0 +1,118 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
+import "../styles/projects-carousel.css";
+
+interface Props {
+  projects: CollectionEntry<"projects">["data"][];
+  /** Tiempo entre desplazamientos automáticos (ms). */
+  intervalMs?: number;
+}
+
+const { projects, intervalMs = 3000 } = Astro.props;
+---
+
+<div
+  class="projects-carousel"
+  role="group"
+  aria-roledescription="carrusel"
+  aria-label="Carrusel de proyectos"
+  data-projects-carousel
+  data-interval={intervalMs}
+>
+  <button
+    type="button"
+    class="wp-projects__btn projects-carousel__btn"
+    aria-label="Proyecto anterior"
+    data-carousel-prev
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="projects-carousel__viewport" data-carousel-viewport>
+    <ul class="projects-carousel__track" data-carousel-track>
+      {
+        projects.map((project, index) => (
+          <li class="projects-carousel__slide">
+            <ProjectCard project={project} aosDelay={index * 100} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <button
+    type="button"
+    class="wp-projects__btn projects-carousel__btn"
+    aria-label="Proyecto siguiente"
+    data-carousel-next
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="wp-projects__btn projects-carousel__toggle"
+    aria-label="Pausar desplazamiento automático de proyectos"
+    aria-pressed="false"
+    data-carousel-toggle
+  >
+    <svg
+      class="projects-carousel__icon-pause"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+      <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+    </svg>
+    <svg
+      class="projects-carousel__icon-play"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+<script src="../scripts/projectsCarousel.ts"></script>
