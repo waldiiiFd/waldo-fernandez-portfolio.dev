@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.5.0...v1.6.0) (2026-10-18)
+
+
+### Features
+
+* add accessible projects carousel ([9937b93](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9937b931bf2887bf623ce2c561573dcfb61e6472))
+* add accessible projects carousel ([00ad548](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/00ad548a93ce6f555262dcb67b037c78c722016a))
+
 ## [1.5.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.4.0...v1.5.0) (2026-10-05)
 
 
