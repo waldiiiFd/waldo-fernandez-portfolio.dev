@@ -5,6 +5,9 @@ const EXIT_DURATION_MS = 450;
 
 function hideLoader(loader: HTMLElement): void {
   loader.classList.add('hidden');
+  // Permite a reveal.ts iniciar la entrada de la página mientras el loader se disuelve.
+  document.documentElement.dataset.loaded = 'true';
+  document.dispatchEvent(new CustomEvent('page-loader:hidden'));
   window.setTimeout((): void => loader.remove(), EXIT_DURATION_MS);
 }
 
