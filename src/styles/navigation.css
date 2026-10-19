@@ -1,53 +1,29 @@
-/* ── Transición global del header ──────────────────────────── */
-[data-header] {
+/* ================================================================ */
+/* Navegación                                                         */
+/* Header fijo: transparente sobre el Hero, navy al hacer scroll.     */
+/* Estados por clase: .is-scrolled (header), .menu-open (header),     */
+/* .is-open (toggle y panel móvil). Tokens de motion en global.css.   */
+/* ================================================================ */
+
+/* ── Header ──────────────────────────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  border-bottom: 1px solid transparent;
   transition:
-    background-color 0.4s ease,
-    backdrop-filter 0.4s ease,
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
+    border-color var(--motion-base) var(--ease-soft),
+    box-shadow var(--motion-base) var(--ease-soft);
 }
 
-[data-header] > nav > div,
-[data-header] img {
-  transition: all 0.3s ease;
-}
-
-/* ── Estado inicial — transparente sobre el Hero ────────────── */
-[data-header][data-scrolled="false"] {
-  background: transparent;
-  border-bottom: none;
-  box-shadow: none;
-}
-
-[data-header][data-scrolled="false"] > nav > div {
-  height: 5rem;
-}
-
-/* Logo - solo filtro, tamaño manejado por Tailwind */
-[data-header] img {
-  filter: brightness(0) invert(1);
-}
-
-/* Menú hamburguesa blanco */
-[data-header] #mobile-menu-toggle,
-[data-header] .menu-icon,
-[data-header] .close-icon {
-  color: #ffffff;
-}
-
-[data-header][data-scrolled="false"] .nav-link,
-[data-header][data-scrolled="false"] span {
-  color: var(--color-text-on-dark);
-}
-
-[data-header][data-scrolled="false"] .nav-link:hover,
-[data-header][data-scrolled="false"] .nav-link.active {
-  color: #ffffff;
-  background-color: var(--color-navy-light-20);
-}
-
-/* ── Estado compacto — al hacer scroll (mismo color que footer) ─ */
-[data-header][data-scrolled="true"] {
+/* El degradado no es animable: se anima la opacidad de esta capa */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: linear-gradient(
     to bottom,
     var(--color-navy-royal),
@@ -55,57 +31,256 @@
   );
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid var(--color-navy-light-30);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-base) var(--ease-soft);
+}
+
+.site-header.is-scrolled::before,
+.site-header.menu-open::before {
+  opacity: 1;
+}
+
+.site-header.is-scrolled,
+.site-header.menu-open {
+  border-bottom-color: var(--color-navy-light-30);
+}
+
+.site-header.is-scrolled {
   box-shadow: 0 4px 20px var(--color-navy-deep-40);
 }
 
-[data-header][data-scrolled="true"] > nav > div {
-  height: 3.5rem;
+/* El header se compacta con padding al hacer scroll */
+.site-header > nav {
+  padding-block: 1rem;
+  transition: padding-block var(--motion-base) var(--ease-soft);
 }
 
-[data-header][data-scrolled="true"] img {
-  width: 24px;
-  height: 24px;
+.site-header.is-scrolled > nav {
+  padding-block: 0.75rem;
+}
+
+/* ── Logo ────────────────────────────────────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+}
+
+.nav-logo:focus-visible,
+.nav-link:focus-visible,
+.mobile-nav-link:focus-visible,
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.nav-logo__mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+
+.nav-logo__img {
+  width: 2.5rem;
+  height: auto;
+  filter: brightness(0) invert(1);
+  transition: width var(--motion-base) var(--ease-soft);
 }
 
 @media (min-width: 768px) {
-  [data-header][data-scrolled="true"] img {
-    width: 32px;
-    height: 32px;
+  .nav-logo__img {
+    width: 3rem;
   }
 }
 
-[data-header][data-scrolled="true"] .nav-link {
-  color: var(--color-secondary);
+.site-header.is-scrolled .nav-logo__img {
+  width: 1.5rem;
 }
 
-[data-header][data-scrolled="true"] .nav-link:hover,
-[data-header][data-scrolled="true"] .nav-link.active {
-  color: var(--color-foreground);
+@media (min-width: 768px) {
+  .site-header.is-scrolled .nav-logo__img {
+    width: 2rem;
+  }
+}
+
+/* Anillo con un overshoot suave al pasar el cursor o enfocar */
+.nav-logo__mark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  scale: 0.9;
+  pointer-events: none;
+  transition:
+    opacity var(--motion-fast) var(--ease-hover),
+    scale var(--motion-base) var(--ease-spring);
+}
+
+.nav-logo:hover .nav-logo__mark::before,
+.nav-logo:focus-visible .nav-logo__mark::before {
+  opacity: 1;
+  scale: 1.22;
+}
+
+/* ── Links de escritorio: subrayado animado ──────────────────── */
+.nav-link {
+  position: relative;
+  color: var(--color-text-on-dark);
+  transition: color var(--motion-fast) var(--ease-hover);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.25rem;
+  height: 2px;
   background-color: var(--color-accent);
+  border-radius: 2px;
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale var(--motion-base) var(--ease-soft);
 }
 
-/* ── Menú abierto — fondo opaco en todo el header ───────────── */
-[data-header].menu-open {
-  background-color: var(--color-navy-deep) !important;
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid var(--color-navy-light-30);
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.active {
+  color: #ffffff;
 }
 
-/* ── Mobile menu — sin gaps, fondo heredado del header ──────── */
-#mobile-menu {
-  width: 100%;
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.active::after {
+  scale: 1 1;
+}
+
+/* ── Toggle: tres líneas que se transforman en una X ─────────── */
+.nav-toggle {
+  position: relative;
+  flex-shrink: 0;
+  color: #ffffff;
+  border: 1px solid var(--color-navy-light-30);
+}
+
+.nav-toggle-line {
+  position: absolute;
+  left: 50%;
+  width: 1.125rem;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease,
+    top 0.25s ease;
+}
+
+.nav-toggle-line:nth-child(1) {
+  top: calc(50% - 5px);
+}
+
+.nav-toggle-line:nth-child(2) {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-toggle-line:nth-child(3) {
+  top: calc(50% + 5px);
+}
+
+.nav-toggle.is-open .nav-toggle-line:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav-toggle.is-open .nav-toggle-line:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.is-open .nav-toggle-line:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ── Panel móvil: colapsable por max-height ──────────────────── */
+/* `visibility: hidden` mientras está cerrado: sus enlaces no reciben foco
+   con Tab ni se anuncian a lectores de pantalla. */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition:
+    max-height var(--motion-base) var(--ease-soft),
+    visibility 0s linear var(--motion-base);
+}
+
+.mobile-menu.is-open {
+  max-height: 28rem;
+  visibility: visible;
+  transition:
+    max-height var(--motion-base) var(--ease-soft),
+    visibility 0s;
+}
+
+.mobile-menu > ul {
   border-top: 1px solid var(--color-navy-light-30);
 }
 
-/* ── Mobile nav links ────────────────────────────────────────── */
+/* Los items suben uno tras otro cuando el panel se abre */
+.mobile-menu li {
+  opacity: 0;
+  translate: 0 -0.375rem;
+  transition:
+    opacity var(--motion-fast) var(--ease-hover),
+    translate var(--motion-base) var(--ease-soft);
+}
+
+.mobile-menu.is-open li {
+  opacity: 1;
+  translate: 0 0;
+  transition-delay: calc(var(--i, 0) * 45ms + 120ms);
+}
+
 .mobile-nav-link {
   color: var(--color-text-on-dark);
+  transition:
+    color var(--motion-fast) var(--ease-hover),
+    background-color var(--motion-fast) var(--ease-hover);
 }
 
 .mobile-nav-link:hover,
+.mobile-nav-link:focus-visible,
 .mobile-nav-link.active {
   color: #ffffff;
   background-color: var(--color-navy-light-20);
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header::before,
+  .site-header > nav,
+  .nav-logo__img,
+  .nav-logo__mark::before,
+  .nav-link,
+  .nav-link::after,
+  .nav-toggle-line,
+  .mobile-menu,
+  .mobile-menu.is-open,
+  .mobile-menu li,
+  .mobile-nav-link {
+    transition: none;
+  }
+
+  .mobile-menu li {
+    opacity: 1;
+    translate: none;
+  }
 }

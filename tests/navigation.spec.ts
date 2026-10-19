@@ -63,35 +63,55 @@ test.describe('Navigation', () => {
   });
 
   test.describe('Mobile Navigation', () => {
-    test('should have mobile menu toggle on small viewport', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
-      const toggle = page.locator('[data-menu-toggle]');
-      if (await toggle.count() > 0) {
-        await expect(toggle).toBeVisible();
-      }
+    });
+
+    test('should have mobile menu toggle on small viewport', async ({ page }) => {
+      await expect(page.locator('#nav-toggle')).toBeVisible();
+    });
+
+    test('should keep the menu closed and unreachable by default', async ({ page }) => {
+      await expect(page.locator('#nav-toggle')).toHaveAttribute('aria-expanded', 'false');
+      await expect(page.locator('#mobile-menu')).toBeHidden();
     });
 
     test('should open mobile menu when toggle clicked', async ({ page }) => {
-      await page.setViewportSize({ width: 375, height: 667 });
-      const toggle = page.locator('[data-menu-toggle]');
-      
-      if (await toggle.count() > 0) {
-        await toggle.click();
-        const mobileMenu = page.locator('#mobile-menu');
-        await expect(mobileMenu).toBeVisible();
-      }
+      await page.locator('#nav-toggle').click();
+      await expect(page.locator('#nav-toggle')).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.locator('#mobile-menu')).toBeVisible();
     });
 
     test('should display all nav links in mobile menu', async ({ page }) => {
-      await page.setViewportSize({ width: 375, height: 667 });
-      const toggle = page.locator('[data-menu-toggle]');
-      
-      if (await toggle.count() > 0) {
-        await toggle.click();
-        const mobileMenu = page.locator('#mobile-menu');
-        await expect(mobileMenu).toBeVisible();
-        await expect(mobileMenu.locator('[data-section]')).toHaveCount(5);
-      }
+      await page.locator('#nav-toggle').click();
+      const mobileMenu = page.locator('#mobile-menu');
+      await expect(mobileMenu).toBeVisible();
+      await expect(mobileMenu.locator('[data-section]')).toHaveCount(5);
+    });
+
+    test('should close with Escape and return focus to the toggle', async ({ page }) => {
+      const toggle = page.locator('#nav-toggle');
+      await toggle.click();
+      await expect(page.locator('#mobile-menu')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      await expect(toggle).toBeFocused();
+      await expect(page.locator('#mobile-menu')).toBeHidden();
+    });
+
+    test('should close after choosing a destination', async ({ page }) => {
+      await page.locator('#nav-toggle').click();
+      await page.locator('#mobile-menu [data-section="contacto"]').click();
+      await expect(page.locator('#nav-toggle')).toHaveAttribute('aria-expanded', 'false');
+    });
+  });
+
+  test.describe('Header State', () => {
+    test('should compact the header after scrolling', async ({ page }) => {
+      const header = page.locator('#site-header');
+      await expect(header).not.toHaveClass(/is-scrolled/);
+      await page.evaluate(() => window.scrollTo(0, 400));
+      await expect(header).toHaveClass(/is-scrolled/);
     });
   });
 
