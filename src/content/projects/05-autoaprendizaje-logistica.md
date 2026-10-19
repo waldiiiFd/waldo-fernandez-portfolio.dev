@@ -1,7 +1,7 @@
 ---
 title: "Autoaprendizaje Logística"
 description: "Backend de plataforma e-learning para autoaprendizaje en logística. Gestión de usuarios con JWT, roles y permisos, cursos con temas y subtemas, exámenes, notas de estudiantes, carga de medios, notificaciones push, API keys, rate limiting y exportación de datos."
-thumbnail: "../../assets/images/projects/codes.png"
+thumbnail: "../../assets/images/projects/codes.webp"
 role: "Desarrollador Backend"
 technologies:
   - "PHP"

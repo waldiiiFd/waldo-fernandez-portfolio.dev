@@ -4,6 +4,7 @@ import Loader from "../components/Loader.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/motion.css";
+import logo from "../assets/images/brand/waldo-mark.png";
 ---
 
 <!doctype html>
@@ -15,8 +16,7 @@ import "../styles/motion.css";
       name="description"
       content="Ingeniero de Software con 2+ años de experiencia. Construyo aplicaciones web modernas y escalables."
     />
-    <link rel="icon" type="image/png" href="/letra-w.png" />
-    <link rel="icon" type="image/svg+xml" href="/letra-w.png" />
+    <link rel="icon" type="image/png" href={logo.src} />
     <meta name="generator" content={Astro.generator} />
     <meta
       name="google-site-verification"

@@ -2,8 +2,8 @@
 import { getCollection } from "astro:content";
 import "../styles/hero.css";
 import { Image } from "astro:assets";
-import mobileImageSrc from "../../public/images/developer-desk-at-night-mobile.webp";
-import desktopImageSrc from "../../public/images/developer-desk-at-night.webp";
+import mobileImageSrc from "../assets/images/hero/developer-desk-at-night-mobile.webp";
+import desktopImageSrc from "../assets/images/hero/developer-desk-at-night.webp";
 
 const heroEntries = await getCollection("hero");
 const heroEntry = heroEntries[0];

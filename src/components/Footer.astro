@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 import "../styles/footer.css";
-import logo40 from '../../public/images/letra-w-40.png';
+import logo from "../assets/images/brand/waldo-mark.png";
 
 const socialLinks = [
   {
@@ -66,9 +66,9 @@ const contactInfo = [
     <!-- Col 1: Branding -->
     <div class="wp-footer__brand flex flex-col gap-3">
       <Image
-        src={logo40}
+        src={logo}
         alt="Logo Waldo Fernández"
-        loading="lazy"
+        class="nav-logo__img"
       />
       <span class="wp-footer__name text-lg font-semibold tracking-tight"
         >Waldo Fernández</span
