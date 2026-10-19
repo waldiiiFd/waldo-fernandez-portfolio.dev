@@ -1,7 +1,7 @@
 ---
 title: "Portfolio Waldo Fernandez"
 description: "Sitio web personal para mostrar experiencia, proyectos y datos de contacto. Desarrollado con Astro y Tailwind CSS."
-thumbnail: "../../assets/images/projects/portfolio.png"
+thumbnail: "../../assets/images/projects/portfolio.webp"
 technologies:
   - "Astro"
   - "Tailwind CSS"

@@ -1,7 +1,7 @@
 ---
 title: "Sistema de Gestión de Disposiciones Legales"
 description: "Backend robusto para la gestión integral de disposiciones legales y normativa. Incluye gestión de usuarios con autenticación JWT, control de acceso basado en roles y permisos, gestión de emisores y categorías de normas, contratos y facturación, sistema de encuestas, notificaciones push, scraping de datos externos y generación de reportes. Exportación a PDF y Excel."
-thumbnail: "../../assets/images/projects/codes.png"
+thumbnail: "../../assets/images/projects/codes.webp"
 role: "Desarrollador Backend"
 technologies:
   - "PHP"

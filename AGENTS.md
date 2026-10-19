@@ -235,7 +235,7 @@ src/
 
 public/
 
-├── letra-w.png      # Site favicon
+├── waldo-mark.png      # Site favicon
 
 ├── favicon.svg
 
