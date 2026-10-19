@@ -1,92 +1,83 @@
-const header = document.querySelector('[data-header]') as HTMLElement | null;
-const logoImg = document.querySelector('[data-logo]') as HTMLImageElement | null;
-const mobileMenuToggle = document.getElementById('mobile-menu-toggle') as HTMLButtonElement | null;
-const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
-const menuIcon = mobileMenuToggle?.querySelector('.menu-icon') as HTMLElement | null;
-const closeIcon = mobileMenuToggle?.querySelector('.close-icon') as HTMLElement | null;
-const navLinks = document.querySelectorAll('[data-section]') as NodeListOf<HTMLAnchorElement>;
-
+// Píxeles de scroll a partir de los cuales el header se compacta
 const SCROLL_THRESHOLD = 30;
+// Debe coincidir con el breakpoint `md` de Tailwind (el menú móvil se oculta)
+const DESKTOP_MEDIA_QUERY = '(min-width: 768px)';
 
-let isMenuOpen = false;
+const header: HTMLElement | null = document.getElementById('site-header');
+const toggle: HTMLElement | null = document.getElementById('nav-toggle');
+const menu: HTMLElement | null = document.getElementById('mobile-menu');
+const navLinks: NodeListOf<HTMLAnchorElement> =
+  document.querySelectorAll<HTMLAnchorElement>('[data-section]');
 
-function toggleMobileMenu(): void {
-  isMenuOpen = !isMenuOpen;
-
-  mobileMenu?.classList.toggle('hidden', !isMenuOpen);
-  mobileMenu?.setAttribute('aria-hidden', String(!isMenuOpen));
-  mobileMenuToggle?.setAttribute('aria-expanded', String(isMenuOpen));
-  mobileMenuToggle?.setAttribute(
-    'aria-label',
-    isMenuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'
-  );
-  menuIcon?.classList.toggle('hidden', isMenuOpen);
-  closeIcon?.classList.toggle('hidden', !isMenuOpen);
-
-  header?.classList.toggle('menu-open', isMenuOpen);
+function isMenuOpen(): boolean {
+  return menu?.classList.contains('is-open') ?? false;
 }
 
-function closeMobileMenu(): void {
-  isMenuOpen = false;
-  mobileMenu?.classList.add('hidden');
-  mobileMenu?.setAttribute('aria-hidden', 'true');
-  mobileMenuToggle?.setAttribute('aria-expanded', 'false');
-  mobileMenuToggle?.setAttribute('aria-label', 'Abrir menú de navegación');
-  menuIcon?.classList.remove('hidden');
-  closeIcon?.classList.add('hidden');
+function setMenuOpen(open: boolean): void {
+  menu?.classList.toggle('is-open', open);
+  toggle?.classList.toggle('is-open', open);
+  header?.classList.toggle('menu-open', open);
+  toggle?.setAttribute('aria-expanded', String(open));
+  toggle?.setAttribute(
+    'aria-label',
+    open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'
+  );
+}
 
-  header?.classList.remove('menu-open');
+function openMenu(): void {
+  setMenuOpen(true);
+}
+
+function closeMenu(): void {
+  setMenuOpen(false);
+}
+
+function toggleMenu(): void {
+  if (isMenuOpen()) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
 }
 
 function updateActiveLink(sectionId: string): void {
-  navLinks.forEach((link) => {
-    const section = link.getAttribute('data-section');
-    const isActive = section === sectionId;
+  navLinks.forEach((link: HTMLAnchorElement): void => {
+    const isActive: boolean = link.dataset.section === sectionId;
     link.classList.toggle('active', isActive);
+    if (isActive) {
+      link.setAttribute('aria-current', 'location');
+    } else {
+      link.removeAttribute('aria-current');
+    }
   });
 }
 
-function initScrollEffects(): void {
-  let lastScrollY = 0;
-  let ticking = false;
+// Compacta el header (y activa su fondo) una vez que la página ha hecho scroll
+let ticking = false;
 
-  function onScroll(): void {
-    lastScrollY = window.scrollY;
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const isScrolled = lastScrollY > SCROLL_THRESHOLD;
+function updateHeaderState(): void {
+  header?.classList.toggle('is-scrolled', window.scrollY > SCROLL_THRESHOLD);
+  ticking = false;
+}
 
-        header?.setAttribute('data-scrolled', String(isScrolled));
-
-        if (isScrolled) {
-          logoImg?.setAttribute('src', '/images/letra-w-40.png');
-          logoImg?.setAttribute('width', '20');
-          logoImg?.setAttribute('height', '20');
-        } else {
-          logoImg?.setAttribute('src', '/images/letra-w-80.png');
-          logoImg?.setAttribute('width', '0');
-          logoImg?.setAttribute('height', '0');
-        }
-
-        ticking = false;
-      });
-      ticking = true;
-    }
+function onScroll(): void {
+  if (!ticking) {
+    window.requestAnimationFrame(updateHeaderState);
+    ticking = true;
   }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 function initSectionObserver(): void {
-  const sections = document.querySelectorAll('section[id]') as NodeListOf<HTMLElement>;
-  
+  const sections: NodeListOf<HTMLElement> =
+    document.querySelectorAll<HTMLElement>('section[id]');
+
   if (sections.length === 0) return;
 
   const observer = new IntersectionObserver(
-    (entries) => {
+    (entries: IntersectionObserverEntry[]): void => {
       let currentSection = '';
 
-      entries.forEach((entry) => {
+      entries.forEach((entry: IntersectionObserverEntry): void => {
         if (entry.isIntersecting) {
           currentSection = entry.target.id;
         }
@@ -102,31 +93,41 @@ function initSectionObserver(): void {
     }
   );
 
-  sections.forEach((section) => {
+  sections.forEach((section: HTMLElement): void => {
     observer.observe(section);
   });
 }
 
-mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
+toggle?.addEventListener('click', toggleMenu);
 
-document.addEventListener('click', (e) => {
-  if (isMenuOpen && header && !header.contains(e.target as Node)) {
-    closeMobileMenu();
+// Cierra el menú móvil al elegir un destino
+menu?.querySelectorAll<HTMLAnchorElement>('a').forEach((link: HTMLAnchorElement): void => {
+  link.addEventListener('click', closeMenu);
+});
+
+// Cierra al hacer clic fuera del header
+document.addEventListener('click', (event: MouseEvent): void => {
+  if (isMenuOpen() && header && !header.contains(event.target as Node)) {
+    closeMenu();
   }
 });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && isMenuOpen) {
-    closeMobileMenu();
-    mobileMenuToggle?.focus();
+// Cierra con Escape y devuelve el foco al botón
+document.addEventListener('keydown', (event: KeyboardEvent): void => {
+  if (event.key === 'Escape' && isMenuOpen()) {
+    closeMenu();
+    toggle?.focus();
   }
 });
 
-navLinks.forEach((link) => {
-  link.addEventListener('click', () => {
-    if (isMenuOpen) closeMobileMenu();
-  });
+// Si el viewport pasa a escritorio con el menú abierto, lo cierra
+window.matchMedia(DESKTOP_MEDIA_QUERY).addEventListener('change', (event: MediaQueryListEvent): void => {
+  if (event.matches) closeMenu();
 });
 
-initScrollEffects();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+updateHeaderState();
 initSectionObserver();
+
+export {};
