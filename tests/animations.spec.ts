@@ -1,194 +1,140 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Animations - AOS System", () => {
+test.describe("Animations - Reveal System", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
   test.describe("Animation System Setup", () => {
-    test("should have AOS CSS loaded", async ({ page }) => {
-      const hasAosCss = await page.locator('[class*="aos"]').count();
-      expect(hasAosCss).toBeGreaterThan(0);
+    test("should not depend on AOS", async ({ page }) => {
+      await expect(page.locator("[data-aos]")).toHaveCount(0);
     });
 
-    test("should have data-aos attribute on animated elements", async ({
+    test("should have data-reveal attribute on animated elements", async ({
       page,
     }) => {
-      const animatedElements = page.locator('[data-aos="fade-up"]');
-      const count = await animatedElements.count();
+      const count = await page.locator("[data-reveal]").count();
       expect(count).toBeGreaterThan(5);
     });
 
-    test("should have data-aos-delay attributes for staggered animations", async ({
+    test("should have data-reveal-delay attributes for staggered animations", async ({
       page,
     }) => {
-      const elementsWithDelay = page.locator("[data-aos-delay]");
-      const count = await elementsWithDelay.count();
+      const count = await page.locator("[data-reveal-delay]").count();
       expect(count).toBeGreaterThan(0);
     });
   });
 
   test.describe("Hero Section Animations", () => {
-    test("hero title should have data-aos attribute", async ({ page }) => {
-      const title = page.locator("#inicio h1");
-      await expect(title).toHaveAttribute("data-aos", "fade-up");
+    test("hero content should be a reveal group", async ({ page }) => {
+      await expect(page.locator("#inicio [data-reveal-group]")).toHaveCount(1);
     });
 
-    test("hero should have animated elements", async ({ page }) => {
-      const heroElements = page.locator("#inicio [data-aos]");
-      const count = await heroElements.count();
-      expect(count).toBeGreaterThanOrEqual(5);
-    });
-
-    test("hero elements should have data-aos-delay for staggered effect", async ({
-      page,
-    }) => {
-      const title = page.locator("#inicio h1");
-      await expect(title).toHaveAttribute("data-aos-delay", "0");
+    test("hero should have animated children", async ({ page }) => {
+      const count = await page
+        .locator("#inicio [data-reveal-group] > *")
+        .count();
+      expect(count).toBeGreaterThanOrEqual(4);
     });
   });
 
   test.describe("About Section Animations", () => {
     test("about should have animated elements", async ({ page }) => {
-      await page.locator("#sobre-mi").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
-      const aboutAnimations = page.locator("#sobre-mi [data-aos]");
-      const count = await aboutAnimations.count();
+      const count = await page.locator("#sobre-mi [data-reveal]").count();
       expect(count).toBeGreaterThanOrEqual(2);
     });
 
-    test("about photo should have animation with delay", async ({ page }) => {
+    test("about photo should have reveal attribute", async ({ page }) => {
       const photo = page.locator("#sobre-mi .wp-about__photo-wrapper");
-      await expect(photo).toHaveAttribute("data-aos", "fade-up");
+      await expect(photo).toHaveAttribute("data-reveal", "");
     });
   });
 
   test.describe("Projects Section Animations", () => {
     test("projects title should have animation", async ({ page }) => {
-      await page.locator("#proyectos").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
       const title = page.locator("#proyectos .wp-projects__title");
-      await expect(title).toHaveAttribute("data-aos", "fade-up");
+      await expect(title).toHaveAttribute("data-reveal", "");
     });
 
-    /* test('all project cards should have data-aos attribute', async ({ page }) => {
-      await page.locator('#proyectos').scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-      
-      const cards = page.locator('#proyectos .wp-projects__card');
-      const count = await cards.count();
-      expect(count).toBeGreaterThan(0);
-      
-      for (let i = 0; i < Math.min(count, 3); i++) {
-        const card = cards.nth(i);
-        await expect(card).toHaveAttribute('data-aos', 'fade-up');
-      }
-    }); */
-
-    /* test('project cards should have data-aos-delay attributes', async ({ page }) => {
-      await page.locator('#proyectos').scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-      
-      const cards = page.locator('#proyectos .wp-projects__card');
-      const firstCard = cards.first();
-      const delay = await firstCard.getAttribute('data-aos-delay');
-      expect(delay).toBe('0');
-    }); */
+    test("projects carousel should reveal as a whole", async ({ page }) => {
+      const carousel = page.locator("#proyectos .projects-carousel");
+      await expect(carousel).toHaveAttribute("data-reveal", "");
+      await expect(
+        page.locator("#proyectos .wp-projects__card[data-reveal]"),
+      ).toHaveCount(0);
+    });
   });
 
   test.describe("Experience Section Animations", () => {
-    test("experience cards should have data-aos attribute", async ({
-      page,
-    }) => {
-      await page.locator("#experiencia").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
+    test("experience cards should have reveal attribute", async ({ page }) => {
       const cards = page.locator(".wp-exp__card");
-      const count = await cards.count();
-      expect(count).toBeGreaterThan(0);
-
-      const firstCard = cards.first();
-      await expect(firstCard).toHaveAttribute("data-aos", "fade-up");
-    });
-
-    test("experience cards should have staggered data-aos-delay", async ({
-      page,
-    }) => {
-      await page.locator("#experiencia").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
-      const cards = page.locator(".wp-exp__card");
-      const firstCard = cards.first();
-      const delay = await firstCard.getAttribute("data-aos-delay");
-      expect(delay).toBe("0");
+      expect(await cards.count()).toBeGreaterThan(0);
+      await expect(cards.first()).toHaveAttribute("data-reveal", "");
     });
   });
 
   test.describe("Contact Section Animations", () => {
     test("contact header should have animation", async ({ page }) => {
-      await page.locator("#contacto").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
       const header = page.locator("#contacto .wp-contact__header");
-      await expect(header).toHaveAttribute("data-aos", "fade-up");
+      await expect(header).toHaveAttribute("data-reveal", "");
     });
 
-    test("contact form should have animation", async ({ page }) => {
-      await page.locator("#contacto").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
+    test("contact form should have animation with delay", async ({ page }) => {
       const form = page.locator("#contacto form");
-      await expect(form).toHaveAttribute("data-aos", "fade-up");
+      await expect(form).toHaveAttribute("data-reveal", "");
+      await expect(form).toHaveAttribute("data-reveal-delay", "100");
     });
 
     test("contact should have 2 animated elements", async ({ page }) => {
-      await page.locator("#contacto").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
-
-      const contactAnimations = page.locator("#contacto [data-aos]");
-      await expect(contactAnimations).toHaveCount(2);
+      await expect(page.locator("#contacto [data-reveal]")).toHaveCount(2);
     });
   });
 
   test.describe("Animation Behavior", () => {
-    test("AOS should add aos-animate class after scrolling into view", async ({
+    test("reveal should add is-revealed class after scrolling into view", async ({
       page,
     }) => {
       await page.locator("#proyectos").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(1500);
 
       const title = page.locator("#proyectos .wp-projects__title");
-      await expect(title).toHaveClass(/aos-animate/);
+      await expect(title).toHaveClass(/is-revealed/);
     });
 
-    test("scroll should trigger animation on elements", async ({ page }) => {
+    test("scroll should leave revealed elements visible", async ({ page }) => {
       await page.locator("#proyectos").scrollIntoViewIfNeeded();
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(1500);
 
-      const projectTitle = page.locator("#proyectos .wp-projects__title");
-      const isVisible = await projectTitle.evaluate((el) => {
-        const style = window.getComputedStyle(el);
-        return style.opacity !== "0";
-      });
+      const opacity = await page
+        .locator("#proyectos .wp-projects__title")
+        .evaluate((el) => window.getComputedStyle(el).opacity);
+      expect(opacity).toBe("1");
+    });
 
-      expect(isVisible).toBe(true);
+    test("carousel clones should never be hidden by reveal state", async ({
+      page,
+    }) => {
+      await page.locator("#proyectos").scrollIntoViewIfNeeded();
+      await page.waitForTimeout(1500);
+
+      const hidden = await page
+        .locator("#proyectos .projects-carousel [aria-hidden='true'][data-reveal]")
+        .count();
+      expect(hidden).toBe(0);
     });
   });
 
-  test.describe("Animation Delays Coverage", () => {
-    test("should have elements with various delay values", async ({ page }) => {
-      const delays = ["0", "100", "200", "300", "400"];
-      let foundCount = 0;
+  test.describe("Reduced Motion", () => {
+    test("should show all content immediately", async ({ browser }) => {
+      const context = await browser.newContext({ reducedMotion: "reduce" });
+      const page = await context.newPage();
+      await page.goto("/");
 
-      for (const delay of delays) {
-        const elements = page.locator(`[data-aos-delay="${delay}"]`);
-        const count = await elements.count();
-        if (count > 0) foundCount++;
-      }
-
-      expect(foundCount).toBeGreaterThanOrEqual(3);
+      const opacity = await page
+        .locator("#contacto .wp-contact__form")
+        .evaluate((el) => window.getComputedStyle(el).opacity);
+      expect(opacity).toBe("1");
+      await context.close();
     });
   });
 });

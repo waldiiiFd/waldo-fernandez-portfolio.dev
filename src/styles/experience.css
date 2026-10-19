@@ -74,11 +74,7 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    var(--color-navy-light-30),
-    transparent
-  );
+  background: linear-gradient(90deg, var(--color-navy-light-30), transparent);
 }
 
 /* ── Cards horizontales full-width ──────────────────────────── */
@@ -94,26 +90,16 @@
   border: 1px solid var(--color-navy-light-20);
   border-radius: 0.75rem;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  will-change: transform, opacity;
   transition:
-    opacity 0.5s ease,
-    transform 0.5s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .wp-exp__card:hover {
   border-color: var(--color-navy-light-40);
-  box-shadow: 
+  box-shadow:
     0 4px 6px rgba(13, 20, 51, 0.04),
     0 12px 24px rgba(13, 20, 51, 0.08);
-}
-
-.wp-exp__card[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Separador lateral accent */
@@ -269,7 +255,11 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-hover) 100%
+  );
   border-radius: 9999px;
   vertical-align: middle;
   flex-shrink: 0;
@@ -298,23 +288,6 @@
   }
 }
 
-/* ── Stagger animation delays ───────────────────────────────── */
-.wp-exp__card[data-index="0"][data-visible="true"] {
-  transition-delay: 0ms;
-}
-.wp-exp__card[data-index="1"][data-visible="true"] {
-  transition-delay: 80ms;
-}
-.wp-exp__card[data-index="2"][data-visible="true"] {
-  transition-delay: 160ms;
-}
-.wp-exp__card[data-index="3"][data-visible="true"] {
-  transition-delay: 240ms;
-}
-.wp-exp__card[data-index="4"][data-visible="true"] {
-  transition-delay: 320ms;
-}
-
 /* ── Education cards - slight variation ─────────────────────── */
 .wp-exp__section:last-child .wp-exp__card::before {
   background: linear-gradient(
@@ -331,12 +304,6 @@
 /* ── Reduced Motion ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .wp-exp__card {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .wp-exp__card[data-visible="true"] {
     transition: none;
   }
 

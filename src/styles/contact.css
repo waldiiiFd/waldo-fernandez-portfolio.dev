@@ -30,16 +30,6 @@
 .wp-contact__header {
   text-align: center;
   margin-bottom: 3rem;
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-}
-
-.wp-contact__header[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .wp-contact__title {
@@ -70,19 +60,6 @@
 }
 
 /* ── Form ─────────────────────────────────────────────────── */
-.wp-contact__form {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s ease 0.15s,
-    transform 0.6s ease 0.15s;
-}
-
-.wp-contact__form[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .wp-contact__grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -261,13 +238,6 @@
 
 /* ── Reduced Motion ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .wp-contact__header,
-  .wp-contact__form {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
   .wp-contact__error {
     animation: none;
   }
