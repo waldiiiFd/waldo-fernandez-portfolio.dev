@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.6.0...v1.7.0) (2026-10-19)
+
+
+### Features
+
+* **loader:** emite page-loader:hidden al ocultarse ([a4d2d00](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/a4d2d00e1047f5d31dc31015c9d965b8ad85437e))
+* **motion:** añade tokens de motion y sistema de scroll reveal ([cdc9bf5](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/cdc9bf504ce5e2f7192232a738fb14ca8d657687))
+
+
+### Bug Fixes
+
+* **projects:** keep carousel autoplay running after using the controls ([0856426](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/0856426623addc449bc2cbd2be2c5cc43bee340f))
+* **projects:** keep carousel autoplay running after using the controls ([78b6a7b](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/78b6a7b97327a0ddacda6a84efc2e12237c89bdc))
+
 ## [1.6.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.5.0...v1.6.0) (2026-10-18)
 
 
