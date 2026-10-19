@@ -140,16 +140,18 @@ test.describe('Experience Section', () => {
   });
 
   test.describe('Animations', () => {
-    test('cards should have fade-up animations', async ({ page }) => {
-      const cards = page.locator('.wp-exp__card[data-aos="fade-up"]');
+    test('cards should have reveal animations', async ({ page }) => {
+      const cards = page.locator('.wp-exp__card[data-reveal]');
       const count = await cards.count();
       expect(count).toBeGreaterThan(0);
     });
 
-    test('cards should have animation delay', async ({ page }) => {
+    test('cards should stay visible after being revealed', async ({ page }) => {
+      await page.locator('#experiencia').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(1500);
       const card = page.locator('.wp-exp__card').first();
-      const dataAosDelay = await card.getAttribute('data-aos-delay');
-      expect(dataAosDelay).toBeTruthy();
+      await expect(card).toHaveClass(/is-revealed/);
+      await expect(card).toBeVisible();
     });
   });
 
