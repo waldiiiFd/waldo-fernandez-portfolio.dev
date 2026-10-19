@@ -41,6 +41,23 @@
   --radius-full: 9999px;
 }
 
+/* ── Motion Tokens ──────────────────────────────────────────────
+ * `static` fuerza la emisión de las variables: se consumen desde archivos
+ * CSS planos (motion.css, ...) que Tailwind no escanea.
+ *  - ease-hover  → curva de hover
+ *  - ease-spring → rebote suave con overshoot
+ *  - ease-soft   → curva larga y decelerada para entradas
+ */
+@theme static {
+  --ease-hover: cubic-bezier(0.3, 0.1, 0.58, 1);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --motion-fast: 0.27s;
+  --motion-base: 0.5s;
+  --motion-slow: 0.9s;
+}
+
 /* ── Base Styles ───────────────────────────────────────────── */
 @layer base {
   /* Bordes: aplica color de borde consistente a todos los elementos */
