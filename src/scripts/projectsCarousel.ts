@@ -25,8 +25,8 @@ class ProjectsCarousel {
   private readonly viewport: HTMLElement;
   private readonly track: HTMLElement;
   private readonly prevBtn: HTMLButtonElement | null;
-  private readonly toggleBtn: HTMLButtonElement | null;
   private readonly nextBtn: HTMLButtonElement | null;
+  private readonly toggleBtn: HTMLButtonElement | null;
   private readonly originals: HTMLElement[];
   private readonly intervalMs: number;
 
@@ -57,7 +57,6 @@ class ProjectsCarousel {
     this.toggleBtn = root.querySelector<HTMLButtonElement>(
       "[data-carousel-toggle]",
     );
-    this.toggleBtn?.addEventListener("click", () => this.togglePause());
     this.originals = Array.from(track.children) as HTMLElement[];
 
     const interval = Number(root.dataset.interval);
@@ -72,8 +71,9 @@ class ProjectsCarousel {
 
   /** Eventos que viven todo el ciclo de vida de la página. */
   private bindStaticEvents(): void {
-    this.prevBtn?.addEventListener("click", () => this.move(-1));
-    this.nextBtn?.addEventListener("click", () => this.move(1));
+    this.prevBtn?.addEventListener("click", () => this.moveManually(-1));
+    this.nextBtn?.addEventListener("click", () => this.moveManually(1));
+    this.toggleBtn?.addEventListener("click", () => this.togglePause());
 
     window.addEventListener("resize", () => this.sync());
     window
@@ -116,12 +116,18 @@ class ProjectsCarousel {
 
     this.listeners = new AbortController();
     const { signal } = this.listeners;
-    this.root.addEventListener("mouseenter", () => this.setHovered(true), {
-      signal,
-    });
-    this.root.addEventListener("mouseleave", () => this.setHovered(false), {
-      signal,
-    });
+    // Hover solo sobre las cards (no sobre los botones) y solo con mouse:
+    // en táctil el hover emulado nunca se libera y bloquearía el autoplay.
+    this.viewport.addEventListener(
+      "pointerenter",
+      (event) => this.onPointer(event, true),
+      { signal },
+    );
+    this.viewport.addEventListener(
+      "pointerleave",
+      (event) => this.onPointer(event, false),
+      { signal },
+    );
     this.root.addEventListener("focusin", (event) => this.onFocusIn(event), {
       signal,
     });
@@ -234,15 +240,37 @@ class ProjectsCarousel {
     this.settleCleanup = null;
   }
 
-  private togglePause(): void {
-    this.userPaused = !this.userPaused;
-    this.toggleBtn?.setAttribute("aria-pressed", String(this.userPaused));
+  /** Movimiento por botón: el autoplay espera un intervalo completo antes de seguir. */
+  private moveManually(direction: Direction): void {
+    this.move(direction);
+    this.stopTimer();
     this.updateTimer();
   }
 
-  private setHovered(value: boolean): void {
-    this.hovered = value;
+  /** Pausa/reanuda el autoplay a petición del usuario (WCAG 2.2.2). */
+  private togglePause(): void {
+    this.userPaused = !this.userPaused;
+    this.toggleBtn?.setAttribute("aria-pressed", String(this.userPaused));
+    // Pulsar "play" es una orden explícita: no debe bloquearla el foco que
+    // el propio botón acaba de recibir.
+    if (!this.userPaused) this.focused = false;
     this.updateTimer();
+  }
+
+  private onPointer(event: PointerEvent, inside: boolean): void {
+    if (event.pointerType !== "mouse") return;
+    this.hovered = inside;
+    this.updateTimer();
+  }
+
+  /** Foco "visible" (teclado). Un clic con mouse no debe pausar el autoplay. */
+  private isKeyboardFocus(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) return false;
+    try {
+      return target.matches(":focus-visible");
+    } catch {
+      return true; // navegador sin :focus-visible: conservador (pausa)
+    }
   }
 
   /**
@@ -250,7 +278,7 @@ class ProjectsCarousel {
    * el viewport (overflow hidden) y rompe la alineación: la traemos a la vista.
    */
   private onFocusIn(event: FocusEvent): void {
-    this.focused = true;
+    this.focused = this.isKeyboardFocus(event.target);
     this.updateTimer();
 
     const target = event.target as HTMLElement | null;
@@ -278,6 +306,7 @@ class ProjectsCarousel {
     const shouldTick =
       this.active &&
       !prefersReducedMotion() &&
+      !this.userPaused &&
       !this.hovered &&
       !this.focused &&
       this.inView &&
