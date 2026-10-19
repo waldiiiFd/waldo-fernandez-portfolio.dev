@@ -85,6 +85,22 @@ Layout.astro (Header + global.css + estructura HTML)
 - Import de `global.css`
 - `<header>` y `<main>` wrapper
 
+## Motion & Transitions
+
+Todo el movimiento vive en CSS + un script pequeño. Los componentes solo llevan atributos `data-*`. **No usar AOS** (ni otras librerías de animación en scroll).
+
+- **Tokens** (`global.css`, `@theme static`): `--ease-hover`, `--ease-spring`, `--ease-soft`, `--motion-fast` (0.27s), `--motion-base` (0.5s), `--motion-slow` (0.9s). Nunca hardcodear `ease` ni una duración en un componente nuevo; usar los tokens.
+- **Scroll reveal** (`styles/motion.css` + `scripts/reveal.ts`, cargados desde `Layout.astro`): añadir `data-reveal` (variantes: `fade`, `left`, `scale`, `curtain`), `data-reveal-delay="ms"`, o `data-reveal-group` en un padre para escalonar a sus hijos directos.
+- **No sumar delays a mano sobre un grupo**: los elementos que entran en el mismo frame ya se escalonan (90 ms). Usar `data-reveal-delay` solo para casos puntuales.
+- **Animar solo `opacity`, `translate`, `scale`, `clip-path`** (nunca `all`). Los reveals usan `animation`, los hover usan `transition` sobre `transform`/`box-shadow`, así nunca colisionan en el mismo elemento.
+- **Nunca** dejar un estado inicial `opacity: 0` en el CSS de un componente (p. ej. `[data-visible]`): el único estado inicial permitido es el de `motion.css`, protegido con `@media (scripting: enabled)`.
+- **Carrusel de proyectos**: se revela como bloque (`data-reveal` en `.projects-carousel`); las tarjetas y los clones no llevan `data-reveal`.
+- **Loader**: `loader.ts` emite `page-loader:hidden` y marca `html[data-loaded="true"]`; `reveal.ts` espera a ese evento para que la primera pantalla se revele al disolverse el loader.
+- **Page transitions**: no se usan (sitio de una sola página con anclas). Si se añaden páginas, portar `@view-transition` desde la demo y no usar `<ClientRouter />` salvo que los scripts migren a `astro:page-load`.
+- **Accesibilidad**: toda animación nueva debe neutralizarse bajo `prefers-reduced-motion: reduce` y el contenido debe seguir visible sin JavaScript.
+- **Moderación**: un solo momento protagonista por página; el resto se mantiene sutil.
+
+
 ## Naming Conventions
 
 | Element | Convention | Example |
@@ -150,8 +166,8 @@ src/
 ├── components/      # Reusable Astro components (only markup)
 ├── layouts/         # Page layouts (Layout.astro)
 ├── pages/           # Routes (index.astro, etc.)
-├── scripts/         # Client-side TypeScript (loader.ts, navigation.ts)
-├── styles/         # CSS files (global.css, navigation.css, loader.css)
+├── scripts/         # Client-side TypeScript (loader.ts, navigation.ts, reveal.ts)
+├── styles/         # CSS files (global.css, navigation.css, loader.css, motion.css)
 └── utils/          # TypeScript utilities (if needed)
 public/
 ├── letra-w.png      # Site favicon
