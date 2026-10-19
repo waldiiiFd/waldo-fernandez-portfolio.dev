@@ -4,11 +4,9 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   project: CollectionEntry<"projects">["data"];
-  /** Delay (ms) de la animación AOS de entrada. */
-  aosDelay?: number;
 }
 
-const { project, aosDelay = 0 } = Astro.props;
+const { project } = Astro.props;
 
 // Tech icon map para los pills
 const techIconMap: Record<string, string> = {
@@ -39,7 +37,7 @@ function getTechIcon(tech: string): string | null {
 }
 ---
 
-<article class="wp-projects__card" data-aos="fade-up" data-aos-delay={aosDelay}>
+<article class="wp-projects__card">
   <div class="wp-projects__card-image">
     {<Image
       src={project.thumbnail}

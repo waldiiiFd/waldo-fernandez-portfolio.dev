@@ -157,17 +157,19 @@ class ProjectsCarousel {
 
   /**
    * Clon puramente visual: fuera del árbol de accesibilidad y del tab order,
-   * y sin atributos AOS (para que nunca queden ocultos por su estado inicial).
+   * y sin atributos de reveal (para que nunca queden ocultos por su estado inicial).
    */
   private createClone(slide: HTMLElement): HTMLElement {
     const clone = slide.cloneNode(true) as HTMLElement;
     clone.setAttribute("aria-hidden", "true");
     clone.setAttribute("inert", "");
-    clone.querySelectorAll<HTMLElement>("[data-aos]").forEach((el) => {
-      el.removeAttribute("data-aos");
-      el.removeAttribute("data-aos-delay");
-      el.classList.remove("aos-init", "aos-animate");
-    });
+    [clone, ...clone.querySelectorAll<HTMLElement>("[data-reveal]")].forEach(
+      (el) => {
+        el.removeAttribute("data-reveal");
+        el.removeAttribute("data-reveal-delay");
+        el.classList.remove("is-revealed");
+      },
+    );
     return clone;
   }
 

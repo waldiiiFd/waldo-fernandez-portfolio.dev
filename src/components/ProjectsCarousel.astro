@@ -18,6 +18,7 @@ const { projects, intervalMs = 3000 } = Astro.props;
   aria-roledescription="carrusel"
   aria-label="Carrusel de proyectos"
   data-projects-carousel
+  data-reveal
   data-interval={intervalMs}
 >
   <button
@@ -46,9 +47,9 @@ const { projects, intervalMs = 3000 } = Astro.props;
   <div class="projects-carousel__viewport" data-carousel-viewport>
     <ul class="projects-carousel__track" data-carousel-track>
       {
-        projects.map((project, index) => (
+        projects.map((project) => (
           <li class="projects-carousel__slide">
-            <ProjectCard project={project} aosDelay={index * 100} />
+            <ProjectCard project={project} />
           </li>
         ))
       }

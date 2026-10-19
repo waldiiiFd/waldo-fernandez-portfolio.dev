@@ -47,16 +47,6 @@
   justify-self: center;
   width: 100%;
   max-width: 380px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-}
-
-.wp-about__photo-wrapper[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .wp-about__photo-frame {
@@ -77,21 +67,6 @@
 
 .wp-about__photo-wrapper:hover .wp-about__photo {
   transform: scale(1.03);
-}
-
-
-/* ── Content ─────────────────────────────────────────────────── */
-.wp-about__content {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s ease 0.15s,
-    transform 0.6s ease 0.15s;
-}
-
-.wp-about__content[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ── Title ──────────────────────────────────────────────────── */
@@ -174,24 +149,8 @@
   transform: scale(1.1);
 }
 
-/* ── Stagger Animation Delays ───────────────────────────────── */
-.wp-about__photo-wrapper[data-visible="true"] {
-  transition-delay: 0ms;
-}
-
-.wp-about__content[data-visible="true"] {
-  transition-delay: 150ms;
-}
-
 /* ── Reduced Motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .wp-about__photo-wrapper,
-  .wp-about__content {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
   .wp-about__photo {
     transition: none;
   }
