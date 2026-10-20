@@ -4,7 +4,7 @@ import ProjectCard from "./ProjectCard.astro";
 import "../styles/projects-carousel.css";
 
 interface Props {
-  projects: CollectionEntry<"projects">["data"][];
+  projects: CollectionEntry<"projects">[];
   /** Tiempo entre desplazamientos automáticos (ms). */
   intervalMs?: number;
 }

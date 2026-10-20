@@ -3,10 +3,11 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  project: CollectionEntry<"projects">["data"];
+  project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
+const { title, description, thumbnail, technologies, url, github, role, company, type } = project.data;
 
 // Tech icon map para los pills
 const techIconMap: Record<string, string> = {
@@ -40,20 +41,20 @@ function getTechIcon(tech: string): string | null {
 <article class="wp-projects__card">
   <div class="wp-projects__card-image">
     {<Image
-      src={project.thumbnail}
-      alt={`Captura de pantalla de ${project.title}`}
+      src={thumbnail}
+      alt={`Captura de pantalla de ${title}`}
       width={400}
       height={225}
     />}
     <div class="wp-projects__card-overlay">
       <div class="wp-projects__card-links">
-        {project.url && (
+        {url && (
           <a
-            href={project.url}
+            href={url}
             target="_blank"
             rel="noopener noreferrer"
             class="wp-projects__card-link"
-            aria-label={`Ver ${project.title} en vivo`}
+            aria-label={`Ver ${title} en vivo`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,13 +73,13 @@ function getTechIcon(tech: string): string | null {
             </svg>
           </a>
         )}
-        {project.github && (
+        {github && (
           <a
-            href={project.github}
+            href={github}
             target="_blank"
             rel="noopener noreferrer"
             class="wp-projects__card-link"
-            aria-label={`Ver código fuente de ${project.title}`}
+            aria-label={`Ver código fuente de ${title}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,25 +96,25 @@ function getTechIcon(tech: string): string | null {
     </div>
   </div>
   <div class="wp-projects__card-content">
-    <h3 class="wp-projects__card-title">{project.title}</h3>
+    <h3 class="wp-projects__card-title">{title}</h3>
 
-    {project.type === "institutional" && project.role && (
+    {type === "institutional" && role && (
       <p class="wp-projects__card-role">
         <span class="wp-projects__card-role-label">Rol:</span>{" "}
-        {project.role}
-        {project.company && (
+        {role}
+        {company && (
           <span class="wp-projects__card-company">
             {" "}
-            @{project.company}
+            @{company}
           </span>
         )}
       </p>
     )}
 
-    <p class="wp-projects__card-description">{project.description}</p>
+    <p class="wp-projects__card-description">{description}</p>
 
     <div class="wp-projects__card-tags">
-      {project.technologies.map((tech) => {
+      {technologies.map((tech) => {
         const iconUrl = getTechIcon(tech);
         return (
           <span class="wp-projects__tag">

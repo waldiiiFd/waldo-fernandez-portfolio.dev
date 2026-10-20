@@ -1,13 +1,14 @@
 ---
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import ProjectsCarousel from "./ProjectsCarousel.astro";
 import "../styles/projects.css";
 
-const projectsEntries = await getCollection("projects");
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
 
-const projects = projectsEntries
-  .sort((a, b) => a.id.localeCompare(b.id))
-  .map((entry) => entry.data);
+const { projects } = Astro.props;
+const sorted = projects.sort((a, b) => a.id.localeCompare(b.id));
 ---
 
 <section id="proyectos" class="wp-projects" aria-label="Sección de proyectos">
@@ -15,7 +16,7 @@ const projects = projectsEntries
     <h2 class="wp-projects__title" data-reveal>Proyectos destacados</h2>
 
     <div class="wp-projects__wrapper">
-      <ProjectsCarousel projects={projects} intervalMs={3000} />
+      <ProjectsCarousel projects={sorted} intervalMs={3000} />
     </div>
   </div>
 </section>
