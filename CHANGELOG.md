@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.7.0...v1.8.0) (2026-10-20)
+
+
+### Features
+
+* **Footer:** add Instagram url ([29147a5](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/29147a56881b28f6556f9a7f2f4e09201a332f0c))
+
 ## [1.7.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.6.0...v1.7.0) (2026-10-19)
 
 
