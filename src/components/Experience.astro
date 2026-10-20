@@ -1,16 +1,20 @@
 ---
-import { getCollection } from "astro:content";
 import "../styles/experience.css";
 import Image from "astro/components/Image.astro";
+import type { CollectionEntry } from "astro:content";
 
-const experienceEntries = await getCollection("experience");
-const educationEntries = await getCollection("education");
+interface Props {
+  experience: CollectionEntry<"experience">[];
+  education: CollectionEntry<"education">[];
+}
 
-const jobs = experienceEntries
+const { experience, education } = Astro.props;
+
+const jobs = experience
   .sort((a, b) => a.id.localeCompare(b.id))
   .map((entry) => entry.data);
 
-const education = educationEntries
+const educationList = education
   .sort((a, b) => a.id.localeCompare(b.id))
   .map((entry) => entry.data);
 
@@ -102,7 +106,7 @@ function getTechIcon(tech: string): string | null {
         <h3 class="wp-exp__section-title">Formación Académica</h3>
         <div class="wp-exp__timeline">
           {
-            education.map((edu, index) => (
+            educationList.map((edu, index) => (
               <article
                 class="wp-exp__card"
                 data-index={index + jobs.length}

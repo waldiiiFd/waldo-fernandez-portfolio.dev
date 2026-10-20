@@ -1,16 +1,21 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Experience from '../components/Experience.astro';
-import About from '../components/About.astro';
-import Projects from '../components/Projects.astro';
-import Contact from '../components/Contact.astro';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Experience from "../components/Experience.astro";
+import About from "../components/About.astro";
+import Projects from "../components/Projects.astro";
+import Contact from "../components/Contact.astro";
+import { getCollection } from "astro:content";
+
+const experience = await getCollection("experience");
+const education = await getCollection("education");
+const projects = await getCollection("projects");
 ---
 
 <Layout>
-    <Hero />
-    <Experience/>
-    <Projects/>
-    <About/>
-    <Contact/>
+  <Hero />
+  <Experience experience={experience} education={education} />
+  <Projects projects={projects} />
+  <About />
+  <Contact />
 </Layout>
