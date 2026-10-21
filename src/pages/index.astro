@@ -8,14 +8,19 @@ import Contact from "../components/Contact.astro";
 import { getCollection } from "astro:content";
 
 const experience = await getCollection("experience");
+const sortedExperience = experience.sort((a, b) => a.data.order - b.data.order);
+
 const education = await getCollection("education");
+const sortedEducation = education.sort((a, b) => a.data.order - b.data.order);
+
 const projects = await getCollection("projects");
+const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout>
   <Hero />
-  <Experience experience={experience} education={education} />
-  <Projects projects={projects} />
+  <Experience experience={sortedExperience} education={sortedEducation} />
+  <Projects projects={sortedProjects} />
   <About />
   <Contact />
 </Layout>
