@@ -8,7 +8,6 @@ interface Props {
 }
 
 const { projects } = Astro.props;
-const sorted = projects.sort((a, b) => a.id.localeCompare(b.id));
 ---
 
 <section id="proyectos" class="wp-projects" aria-label="Sección de proyectos">
@@ -16,7 +15,7 @@ const sorted = projects.sort((a, b) => a.id.localeCompare(b.id));
     <h2 class="wp-projects__title" data-reveal>Proyectos destacados</h2>
 
     <div class="wp-projects__wrapper">
-      <ProjectsCarousel projects={sorted} intervalMs={3000} />
+      <ProjectsCarousel projects_projects_to_projectsCarousel={projects} intervalMs={3000} />
     </div>
   </div>
 </section>
