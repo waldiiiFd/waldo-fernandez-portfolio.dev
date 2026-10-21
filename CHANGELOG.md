@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.8.0...v1.9.0) (2026-10-21)
+
+
+### Features
+
+* **content:** add order field to collections for explicit sorting ([70715ad](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/70715ad6f6f43521dfe700259d7a632e15940821))
+
 ## [1.8.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.7.0...v1.8.0) (2026-10-20)
 
 
