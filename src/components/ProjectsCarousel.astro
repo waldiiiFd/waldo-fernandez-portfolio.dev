@@ -4,12 +4,13 @@ import ProjectCard from "./ProjectCard.astro";
 import "../styles/projects-carousel.css";
 
 interface Props {
-  projects: CollectionEntry<"projects">[];
+  projects_projects_to_projectsCarousel: CollectionEntry<"projects">[];
   /** Tiempo entre desplazamientos automáticos (ms). */
   intervalMs?: number;
 }
 
-const { projects, intervalMs = 3000 } = Astro.props;
+const { projects_projects_to_projectsCarousel, intervalMs = 3000 } =
+  Astro.props;
 ---
 
 <div
@@ -47,9 +48,11 @@ const { projects, intervalMs = 3000 } = Astro.props;
   <div class="projects-carousel__viewport" data-carousel-viewport>
     <ul class="projects-carousel__track" data-carousel-track>
       {
-        projects.map((project) => (
+        projects_projects_to_projectsCarousel.map((projects) => (
           <li class="projects-carousel__slide">
-            <ProjectCard project={project} />
+            <ProjectCard
+              sorted_project_projectCarousel_to_projectCard={projects}
+            />
           </li>
         ))
       }

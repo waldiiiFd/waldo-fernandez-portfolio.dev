@@ -3,11 +3,11 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  project: CollectionEntry<"projects">;
+  sorted_project_projectCarousel_to_projectCard: CollectionEntry<"projects">;
 }
 
-const { project } = Astro.props;
-const { title, description, thumbnail, technologies, url, github, role, company, type } = project.data;
+const { sorted_project_projectCarousel_to_projectCard } = Astro.props;
+const { title, description, thumbnail, technologies, url, github, role, company, type } = sorted_project_projectCarousel_to_projectCard.data;
 
 // Tech icon map para los pills
 const techIconMap: Record<string, string> = {
