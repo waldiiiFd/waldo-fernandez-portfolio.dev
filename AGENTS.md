@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-- **Framework**: Astro 6 (latest)
+- **Framework**: Astro 7 (^7.2.10)
 - **Styling**: Tailwind CSS 4 with `@tailwindcss/vite` plugin
 - **TypeScript**: Strict mode (`astro/tsconfigs/strict`)
 - **Node**: >= 22.12.0
@@ -17,8 +17,9 @@
 | `npm run preview`     | Preview production build locally           |
 | `npm run astro <cmd>` | Run Astro CLI commands                     |
 | `npx astro check`     | Run TypeScript type checking               |
+| `npx vitest run`      | Run unit tests (vitest)                    |
 
-**Note**: No test framework is configured. Do not add tests unless explicitly requested.
+**Note**: Unit tests use vitest (`vitest.config.ts`, environment: node). Tests live in `src/scripts/contact/*.test.ts`. Do not add Playwright tests unless explicitly requested.
 
 ## Color Palette (Navy Theme)
 
@@ -227,11 +228,22 @@ src/
 
 ├── pages/           # Routes (index.astro, etc.)
 
-├── scripts/         # Client-side TypeScript (loader.ts, navigation.ts, reveal.ts)
+├── scripts/         # Client-side TypeScript
+│   ├── contact/     # Contact form module
+│   │   ├── index.ts        # Form logic with DI
+│   │   ├── validators.ts   # Pure validation functions
+│   │   ├── validators.test.ts
+│   │   ├── email-service.ts  # EmailService interface + adapter
+│   │   └── email-service.test.ts
+│   ├── loader.ts
+│   ├── navigation.ts
+│   ├── projectsCarousel.ts
+│   └── reveal.ts
 
 ├── styles/         # CSS files (global.css, navigation.css, loader.css, motion.css)
 
-└── utils/          # TypeScript utilities (if needed)
+├── utils/          # TypeScript utilities
+│   └── techIcons.ts  # Shared getTechIcon() for technology icons
 
 public/
 
@@ -275,14 +287,32 @@ Para evitar vulnerabilidades en producción, sigue este flujo al realizar cambio
 
 **Ejemplo reciente: Actualización de Astro `^6.1.4` → `^7.2.10` + 5 transitive dependencies, reduciendo 29 HIGH → 0 vulnerabilidades.**
 
+## Contact Form Architecture (SOLID)
+
+- **validators.ts**: Pure validation functions (no DOM), open for extension (OCP)
+- **email-service.ts**: `EmailService` interface + `EmailJsService` adapter + `createEmailService()` factory (ISP, DIP)
+- **contact/index.ts**: Uses dependency injection for `EmailService`, imports validators
+- Tests: 24 vitest unit tests (20 validators + 4 email-service)
+
+## Graphify Commands
+
+| Command                        | Action                                         |
+| ------------------------------ | ---------------------------------------------- |
+| `uv tool run graphify .`       | Full knowledge graph build                     |
+| `uv tool run graphify . --update` | Incremental update (changed files only)      |
+| `uv tool run graphify query "Q"` | Query graph for architectural questions      |
+| `uv tool run graphify explain "N"` | Explain a node and its connections          |
+
 ## Available Skills
 
 | Skill                    | Trigger                               | Description                                                                           |
 | ------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------- |
 | `tailwind-design-system` | Design systems, Tailwind v4, theming  | Build scalable design systems with Tailwind CSS v4, design tokens, component variants |
 | `frontend-design`        | Building components, pages, UI design | Create distinctive, production-grade frontend interfaces avoiding generic aesthetics  |
+| `graphify`               | Codebase analysis, architecture docs  | Build navigable knowledge graph with community detection, SOLID auditing              |
 
-**###** **When to Load Skills**
+**When to Load Skills**
 
 - **tailwind-design-system**: Creating component libraries, implementing design tokens/theming
 - **frontend-design**: Building web components, pages, landing pages, dashboards
+- **graphify**: Analyzing codebase architecture, finding god nodes, SOLID audits, dependency analysis
