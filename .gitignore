@@ -30,3 +30,7 @@ coverage/
 
 # graphify-out
 graphify-out/
+
+# editor/tooling
+.opencode/
+.gitattributes
