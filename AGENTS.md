@@ -17,9 +17,10 @@
 | `npm run preview`     | Preview production build locally           |
 | `npm run astro <cmd>` | Run Astro CLI commands                     |
 | `npx astro check`     | Run TypeScript type checking               |
-| `npx vitest run`      | Run unit tests (vitest)                    |
+| `npm run test:unit`   | Run unit tests (vitest)                    |
+| `npm run test:e2e`    | Run E2E tests (Playwright)                 |
 
-**Note**: Unit tests use vitest (`vitest.config.ts`, environment: node). Tests live in `src/scripts/contact/*.test.ts`. Do not add Playwright tests unless explicitly requested.
+**Note**: Unit tests use vitest (`vitest.config.ts`, environment: node, no DOM) and live next to the code as `src/**/*.test.ts` (contact module and `src/utils/`). E2E tests use Playwright and live in `tests/`. Prefer unit tests for pure logic; add Playwright tests only for behavior that needs a real browser (e.g. carousel autoplay timing).
 
 ## Color Palette (Navy Theme)
 
@@ -76,7 +77,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
 
-  <h1 class="text-3xl font-bold text-foreground">Bienvenido</h1>
+  <h1 class="text-3xl font-bold text-foreground">Bienvenido</h1>
 
 </Layout>
 
@@ -94,13 +95,13 @@ import Layout from '../layouts/Layout.astro';
 
 Layout.astro (Header + global.css + estructura HTML)
 
-    │
+    │
 
-    └── <slot />
+    └── <slot />
 
-            │
+            │
 
-            └── Pages (contenido)
+            └── Pages (contenido)
 
 ```
 
@@ -159,29 +160,23 @@ El header (`Navigation.astro`, `scripts/navigation.ts`, `styles/navigation.css`)
 - Mobile-first approach
 
 ```css
-
 /* global.css - Tokens y estilos base */
 
 @import "tailwindcss";
 
 @theme {
+  --color-primary: #274272;
 
-  --color-primary: #274272;
+  --color-background: #f5f7fa;
 
-  --color-background: #F5F7FA;
-
-  /* ... */
-
+  /* ... */
 }
 
 /* navigation.css - Estilos de componentes */
 
 .nav-link {
-
-  color: var(--color-muted);
-
+  color: var(--color-muted);
 }
-
 ```
 
 ## Import Patterns
@@ -222,13 +217,13 @@ import '../styles/loader.css';
 
 src/
 
-├── components/      # Reusable Astro components (only markup)
+├── components/      # Reusable Astro components (only markup)
 
-├── layouts/         # Page layouts (Layout.astro)
+├── layouts/         # Page layouts (Layout.astro)
 
-├── pages/           # Routes (index.astro, etc.)
+├── pages/           # Routes (index.astro, etc.)
 
-├── scripts/         # Client-side TypeScript
+├── scripts/         # Client-side TypeScript
 │   ├── contact/     # Contact form module
 │   │   ├── index.ts        # Form logic with DI
 │   │   ├── validators.ts   # Pure validation functions
@@ -240,18 +235,22 @@ src/
 │   ├── projectsCarousel.ts
 │   └── reveal.ts
 
-├── styles/         # CSS files (global.css, navigation.css, loader.css, motion.css)
+├── styles/         # CSS files (global.css, navigation.css, loader.css, motion.css)
 
-├── utils/          # TypeScript utilities
-│   └── techIcons.ts  # Shared getTechIcon() for technology icons
+├── utils/          # TypeScript utilities
+│   ├── techIcons.ts            # Shared getTechIcon() for technology icons
+│   ├── autoplayPolicy.ts       # Pure shouldAutoplay() policy for the carousel
+│   └── autoplayPolicy.test.ts
 
 public/
 
-├── waldo-mark.png      # Site favicon
+├── waldo-mark.png      # Site favicon
 
 ├── favicon.svg
 
-└── ...             # Static files served as-is
+└── ...             # Static files served as-is
+
+tests/              # Playwright E2E specs (incl. carousel-autoplay.spec.ts)
 
 ```
 
@@ -294,14 +293,21 @@ Para evitar vulnerabilidades en producción, sigue este flujo al realizar cambio
 - **contact/index.ts**: Uses dependency injection for `EmailService`, imports validators
 - Tests: 24 vitest unit tests (20 validators + 4 email-service)
 
+## Carousel Autoplay Policy
+
+- **utils/autoplayPolicy.ts**: `shouldAutoplay(conditions)` is a pure function (no DOM) that decides whether the carousel may advance on its own. It returns `true` only if the carousel is active, has no reduced-motion preference, is not paused by the user, is not hovered, has no keyboard focus, is in the viewport and the tab is visible.
+- **scripts/projectsCarousel.ts**: `updateTimer()` gathers the state flags and calls `shouldAutoplay()`; the class keeps only DOM and timer handling.
+- **Do not share modules between `<script>` entries without checking the build**: in Astro each `<script src>` is a separate entry, so a util imported by two scripts becomes an extra chunk and stops inlining small scripts. A util used by a single script is bundled with it at no cost.
+- Tests: unit tests in `src/utils/autoplayPolicy.test.ts`; E2E in `tests/carousel-autoplay.spec.ts`.
+
 ## Graphify Commands
 
-| Command                        | Action                                         |
-| ------------------------------ | ---------------------------------------------- |
-| `uv tool run graphify .`       | Full knowledge graph build                     |
-| `uv tool run graphify . --update` | Incremental update (changed files only)      |
-| `uv tool run graphify query "Q"` | Query graph for architectural questions      |
-| `uv tool run graphify explain "N"` | Explain a node and its connections          |
+| Command                            | Action                                  |
+| ---------------------------------- | --------------------------------------- |
+| `uv tool run graphify .`           | Full knowledge graph build              |
+| `uv tool run graphify . --update`  | Incremental update (changed files only) |
+| `uv tool run graphify query "Q"`   | Query graph for architectural questions |
+| `uv tool run graphify explain "N"` | Explain a node and its connections      |
 
 ## Available Skills
 
