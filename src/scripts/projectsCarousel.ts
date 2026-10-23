@@ -1,3 +1,5 @@
+import { shouldAutoplay } from "../utils/autoplayPolicy";
+
 const ACTIVE_ATTR = "data-carousel-active";
 const ANIMATING_CLASS = "is-animating";
 // Debe ser algo mayor que la duración de la transición en projects-carousel.css (0.7s).
@@ -305,14 +307,15 @@ class ProjectsCarousel {
   }
 
   private updateTimer(): void {
-    const shouldTick =
-      this.active &&
-      !prefersReducedMotion() &&
-      !this.userPaused &&
-      !this.hovered &&
-      !this.focused &&
-      this.inView &&
-      !document.hidden;
+    const shouldTick = shouldAutoplay({
+      active: this.active,
+      reducedMotion: prefersReducedMotion(),
+      userPaused: this.userPaused,
+      hovered: this.hovered,
+      focused: this.focused,
+      inView: this.inView,
+      documentHidden: document.hidden,
+    });
 
     if (shouldTick) this.startTimer();
     else this.stopTimer();
