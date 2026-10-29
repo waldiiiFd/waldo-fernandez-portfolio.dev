@@ -27,3 +27,10 @@ pnpm-debug.log*
 playwright-report/
 test-results/
 coverage/
+
+# graphify-out
+graphify-out/
+
+# editor/tooling
+.opencode/
+.gitattributes

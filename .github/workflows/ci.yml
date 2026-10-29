@@ -29,6 +29,9 @@ jobs:
       - name: Type check (Astro)
         run: npx astro check
 
+      - name: Unit tests (Vitest)
+        run: npm run test:unit
+
       - name: Build project
         run: npm run build
         id: build

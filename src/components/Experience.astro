@@ -2,6 +2,7 @@
 import "../styles/experience.css";
 import Image from "astro/components/Image.astro";
 import type { CollectionEntry } from "astro:content";
+import { getTechIcon } from "../utils/techIcons";
 
 interface Props {
   experience: CollectionEntry<"experience">[];
@@ -13,31 +14,6 @@ const { experience, education } = Astro.props;
 const jobs = experience;
 const educationList = education;
 
-// Mapa tecnología → slug de Simple Icons (https://simpleicons.org)
-const techIconMap: Record<string, string> = {
-  PHP: "php",
-  Laravel: "laravel",
-  "REST APIs": "fastapi",
-  PostgreSQL: "postgresql",
-  MariaDB: "mariadb",
-  Git: "git",
-  GitHub: "github",
-  "Postman API": "postman",
-  Vue: "vuedotjs",
-  Astro: "astro",
-  TypeScript: "typescript",
-  JavaScript: "javascript",
-  "Node.js": "nodedotjs",
-  NestJS: "nestjs",
-  Docker: "docker",
-  MySQL: "mysql",
-};
-
-function getTechIcon(tech: string): string | null {
-  const slug = techIconMap[tech];
-  if (!slug) return null;
-  return `https://cdn.simpleicons.org/${slug}`;
-}
 ---
 
 <section id="experiencia" class="wp-exp" aria-label="Sección de experiencia">
