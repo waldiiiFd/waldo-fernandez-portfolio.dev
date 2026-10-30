@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://waldo-fernandez-portfolio.vercel.app',
+  site: 'https://waldo-fernandez-portfolio-dev.vercel.app',
   
   vite: {
     plugins: [tailwindcss()]
