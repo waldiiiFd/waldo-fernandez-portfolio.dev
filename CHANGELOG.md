@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.9.0...v1.10.0) (2026-10-30)
+
+
+### Features
+
+* **carousel:** extract autoplay policy into pure function ([9f72208](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9f72208d85cf7a3029a5185f11668d10e4c7c600))
+* **ci:** add unit test step to continuous integration workflow ([e0cb7cc](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/e0cb7cc80575d6786882f0c7b3314de4221087a9))
+* **contact:** add EmailService abstraction ([061f38b](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/061f38ba57a4b93627fa46a45cb84222c6d440bd))
+* **contact:** add pure validators module ([9c2bc55](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9c2bc5555d420b8c9ed35c7b35437cc5330dc072))
+* **scripts:** delegate autoplay decision to pure policy function ([c74f380](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/c74f38009e2f75881630b9ec858466087043e1f0))
+* **utils:** add shared techIcons utility ([9386be8](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9386be873b4e83e99970b8cb1455fc782d18e459))
+
 ## [1.9.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.8.0...v1.9.0) (2026-10-21)
 
 
