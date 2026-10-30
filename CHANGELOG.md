@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.10.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.10.0...v1.10.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* update canonical site URL ([9fcf866](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9fcf86684b872301e9ab95e48c2cecafdb272f5a))
+* update canonical site URL ([9909621](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/9909621bde610554bb442d7f11768df27ecbc67b))
+* update sitemap domain in robots.txt ([decfe10](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/decfe10972e0fc56286fff0a3c208724360b7826))
+* update sitemap domain in robots.txt ([512be76](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/512be76a67d8b63f3d3982daaf9650671adbff08))
+
 ## [1.10.0](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.9.0...v1.10.0) (2026-10-30)
 
 
