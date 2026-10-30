@@ -2,7 +2,7 @@ const TECH_ICON_MAP: Record<string, string> = {
   Astro: "astro",
   "Tailwind CSS": "tailwindcss",
   TypeScript: "typescript",
-  Netlify: "netlify",
+  Vercel: "vercel",
   PHP: "php",
   Laravel: "laravel",
   "Laravel 11": "laravel",
