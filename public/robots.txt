@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://waldo-fernandez-portfolio.vercel.app/sitemap-index.xml
+Sitemap: https://waldo-fernandez-portfolio-dev.vercel.app/sitemap-index.xml
