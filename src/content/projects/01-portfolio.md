@@ -6,7 +6,7 @@ technologies:
   - "Astro"
   - "Tailwind CSS"
   - "TypeScript"
-  - "Netlify"
+  - "Vercel"
 url: ""
 github: ""
 type: "personal"

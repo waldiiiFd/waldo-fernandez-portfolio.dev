@@ -5,6 +5,9 @@ import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import "../styles/motion.css";
 import logo from "../assets/images/brand/waldo-mark.png";
+
+// Astro.site ya es un objeto URL, disponible en cada .astro
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -20,11 +23,11 @@ import logo from "../assets/images/brand/waldo-mark.png";
     <meta name="generator" content={Astro.generator} />
     <meta
       name="google-site-verification"
-      content="4Sv6dK6_mv_zfnr9FzfL3L64gShqMK66-gh8L4LEe6Y"
+      content="OwpkDGYxLNDPms4F5f6EODsNywi_tc-VACnirne43D0"
     />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://waldo-fernandez-dev.netlify.app/" />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -36,10 +39,7 @@ import logo from "../assets/images/brand/waldo-mark.png";
       content="Ingeniero de Software con 2+ años de experiencia. Construyo aplicaciones web modernas y escalables."
     />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://waldo-fernandez-dev.netlify.app/"
-    />
+    <meta property="og:url" content={canonicalURL} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
