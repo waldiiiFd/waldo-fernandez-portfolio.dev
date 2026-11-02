@@ -1,1 +1,5 @@
-/* https://waldo-fernandez-portfolio-dev.vercel.app/:splat 301!
+# Regla para peticiones HTTP (sin S)
+http://waldo-fernandez-dev.netlify.app/* https://waldo-fernandez-portfolio-dev.vercel.app/:splat 301!
+
+# Regla para peticiones HTTPS (con S)
+https://waldo-fernandez-dev.netlify.app/* https://waldo-fernandez-portfolio-dev.vercel.app/:splat 301!
