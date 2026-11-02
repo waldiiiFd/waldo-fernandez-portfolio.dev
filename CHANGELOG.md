@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.10.2](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.10.1...v1.10.2) (2026-11-02)
+
+
+### Bug Fixes
+
+* pin CI to Node.js 22.12.0 ([da9a441](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/da9a44133e04ed1e0a71a6e2eb8580c38348164d))
+* pin CI to Node.js 22.12.0 ([b689333](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/b689333245ce6f49adb05e01d1ce3e0f37226a9d))
+* redirect Netlify domain to Vercel ([e6bf4e3](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/e6bf4e33be3ec6df79428d6428930e023fc08758))
+* redirect Netlify domain to Vercel ([e8e3a43](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/commit/e8e3a434128577af9348c6b6f0e85b264b9e142d))
+
 ## [1.10.1](https://github.com/waldiiiFd/waldo-fernandez-portfolio.dev/compare/v1.10.0...v1.10.1) (2026-10-30)
 
 
